@@ -13,10 +13,10 @@
  */
 
 import * as url from "url";
-import * as isomorphicFetch from "isomorphic-fetch";
+import * as nodeFetch from "node-fetch";
 import { Configuration } from "./configuration";
 
-const BASE_PATH = "/".replace(/\/+$/, "");
+const BASE_PATH = "https://api.beatleader.xyz/".replace(/\/+$/, "");
 
 /**
  *
@@ -32,10 +32,10 @@ export const COLLECTION_FORMATS = {
 /**
  *
  * @export
- * @interface FetchAPI
+ * @interface NodeFetch
  */
-export interface FetchAPI {
-    (url: string, init?: any): Promise<Response>;
+export interface NodeFetch {
+    (url: string, init?: any): Promise<nodeFetch.Response>;
 }
 
 /**
@@ -54,9 +54,9 @@ export interface FetchArgs {
  * @class BaseAPI
  */
 export class BaseAPI {
-    protected configuration: Configuration;
+    protected configuration!: Configuration;
 
-    constructor(configuration?: Configuration, protected basePath: string = BASE_PATH, protected fetch: FetchAPI = isomorphicFetch) {
+    constructor(configuration?: Configuration, protected basePath: string = BASE_PATH, protected fetch: NodeFetch = nodeFetch.default) {
         if (configuration) {
             this.configuration = configuration;
             this.basePath = configuration.basePath || this.basePath;
@@ -71,7 +71,7 @@ export class BaseAPI {
  * @extends {Error}
  */
 export class RequiredError extends Error {
-    name: "RequiredError"
+    name!: "RequiredError";
     constructor(public field: string, msg?: string) {
         super(msg);
     }
@@ -7355,7 +7355,7 @@ export interface WinTracker {
  * AchievementsApi - fetch parameter creator
  * @export
  */
-export const AchievementsApiFetchParamCreator = function (configuration?: Configuration) {
+export const AchievementsApiFetchParamCreator = function (_configuration?: Configuration) {
     return {
         /**
          * 
@@ -7632,9 +7632,9 @@ export const AchievementsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        achievementIdLevelPut(id: number, name?: string, image?: string, smallImage?: string, level?: number, description?: string, detailedDescription?: string, color?: string, link?: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<AchievementLevel> {
+        achievementIdLevelPut(id: number, name?: string, image?: string, smallImage?: string, level?: number, description?: string, detailedDescription?: string, color?: string, link?: string, options?: any): (fetch?: NodeFetch, basePath?: string) => Promise<AchievementLevel> {
             const localVarFetchArgs = AchievementsApiFetchParamCreator(configuration).achievementIdLevelPut(id, name, image, smallImage, level, description, detailedDescription, color, link, options);
-            return (fetch: FetchAPI = isomorphicFetch, basePath: string = BASE_PATH) => {
+            return (fetch: NodeFetch = nodeFetch.default, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
                         return response.json();
@@ -7652,9 +7652,9 @@ export const AchievementsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        achievementPut(name?: string, description?: string, link?: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<AchievementDescription> {
+        achievementPut(name?: string, description?: string, link?: string, options?: any): (fetch?: NodeFetch, basePath?: string) => Promise<AchievementDescription> {
             const localVarFetchArgs = AchievementsApiFetchParamCreator(configuration).achievementPut(name, description, link, options);
-            return (fetch: FetchAPI = isomorphicFetch, basePath: string = BASE_PATH) => {
+            return (fetch: NodeFetch = nodeFetch.default, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
                         return response.json();
@@ -7670,9 +7670,9 @@ export const AchievementsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        achievementsGet(id?: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<Array<AchievementDescription>> {
+        achievementsGet(id?: string, options?: any): (fetch?: NodeFetch, basePath?: string) => Promise<Array<AchievementDescription>> {
             const localVarFetchArgs = AchievementsApiFetchParamCreator(configuration).achievementsGet(id, options);
-            return (fetch: FetchAPI = isomorphicFetch, basePath: string = BASE_PATH) => {
+            return (fetch: NodeFetch = nodeFetch.default, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
                         return response.json();
@@ -7690,9 +7690,9 @@ export const AchievementsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        playerIdAchievementPost(id: string, achievemntId?: number, level?: number, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<Achievement> {
+        playerIdAchievementPost(id: string, achievemntId?: number, level?: number, options?: any): (fetch?: NodeFetch, basePath?: string) => Promise<Achievement> {
             const localVarFetchArgs = AchievementsApiFetchParamCreator(configuration).playerIdAchievementPost(id, achievemntId, level, options);
-            return (fetch: FetchAPI = isomorphicFetch, basePath: string = BASE_PATH) => {
+            return (fetch: NodeFetch = nodeFetch.default, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
                         return response.json();
@@ -7708,9 +7708,9 @@ export const AchievementsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        playerIdAchievementsGet(id: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<Array<Achievement>> {
+        playerIdAchievementsGet(id: string, options?: any): (fetch?: NodeFetch, basePath?: string) => Promise<Array<Achievement>> {
             const localVarFetchArgs = AchievementsApiFetchParamCreator(configuration).playerIdAchievementsGet(id, options);
-            return (fetch: FetchAPI = isomorphicFetch, basePath: string = BASE_PATH) => {
+            return (fetch: NodeFetch = nodeFetch.default, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
                         return response.json();
@@ -7725,9 +7725,9 @@ export const AchievementsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        surveyAchievementGet(options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<Achievement> {
+        surveyAchievementGet(options?: any): (fetch?: NodeFetch, basePath?: string) => Promise<Achievement> {
             const localVarFetchArgs = AchievementsApiFetchParamCreator(configuration).surveyAchievementGet(options);
-            return (fetch: FetchAPI = isomorphicFetch, basePath: string = BASE_PATH) => {
+            return (fetch: NodeFetch = nodeFetch.default, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
                         return response.json();
@@ -7744,9 +7744,9 @@ export const AchievementsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        surveyFilledPost(playerId?: string, key?: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<Response> {
+        surveyFilledPost(playerId?: string, key?: string, options?: any): (fetch?: NodeFetch, basePath?: string) => Promise<nodeFetch.Response> {
             const localVarFetchArgs = AchievementsApiFetchParamCreator(configuration).surveyFilledPost(playerId, key, options);
-            return (fetch: FetchAPI = isomorphicFetch, basePath: string = BASE_PATH) => {
+            return (fetch: NodeFetch = nodeFetch.default, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
                         return response;
@@ -7763,7 +7763,7 @@ export const AchievementsApiFp = function(configuration?: Configuration) {
  * AchievementsApi - factory interface
  * @export
  */
-export const AchievementsApiFactory = function (configuration?: Configuration, fetch?: FetchAPI, basePath?: string) {
+export const AchievementsApiFactory = function (configuration?: Configuration, fetch?: NodeFetch, basePath?: string) {
     return {
         /**
          * 
@@ -7944,7 +7944,7 @@ export class AchievementsApi extends BaseAPI {
  * AuthenticationApi - fetch parameter creator
  * @export
  */
-export const AuthenticationApiFetchParamCreator = function (configuration?: Configuration) {
+export const AuthenticationApiFetchParamCreator = function (_configuration?: Configuration) {
     return {
         /**
          * 
@@ -8404,9 +8404,9 @@ export const AuthenticationApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        oauth2AuthorizeGet(options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<Response> {
+        oauth2AuthorizeGet(options?: any): (fetch?: NodeFetch, basePath?: string) => Promise<nodeFetch.Response> {
             const localVarFetchArgs = AuthenticationApiFetchParamCreator(configuration).oauth2AuthorizeGet(options);
-            return (fetch: FetchAPI = isomorphicFetch, basePath: string = BASE_PATH) => {
+            return (fetch: NodeFetch = nodeFetch.default, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
                         return response;
@@ -8421,9 +8421,9 @@ export const AuthenticationApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        oauth2AuthorizePost(options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<Response> {
+        oauth2AuthorizePost(options?: any): (fetch?: NodeFetch, basePath?: string) => Promise<nodeFetch.Response> {
             const localVarFetchArgs = AuthenticationApiFetchParamCreator(configuration).oauth2AuthorizePost(options);
-            return (fetch: FetchAPI = isomorphicFetch, basePath: string = BASE_PATH) => {
+            return (fetch: NodeFetch = nodeFetch.default, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
                         return response;
@@ -8438,9 +8438,9 @@ export const AuthenticationApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        oauth2IdentityGet(options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<Response> {
+        oauth2IdentityGet(options?: any): (fetch?: NodeFetch, basePath?: string) => Promise<nodeFetch.Response> {
             const localVarFetchArgs = AuthenticationApiFetchParamCreator(configuration).oauth2IdentityGet(options);
-            return (fetch: FetchAPI = isomorphicFetch, basePath: string = BASE_PATH) => {
+            return (fetch: NodeFetch = nodeFetch.default, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
                         return response;
@@ -8455,9 +8455,9 @@ export const AuthenticationApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        oauthclientAntiforgeryGet(options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<string> {
+        oauthclientAntiforgeryGet(options?: any): (fetch?: NodeFetch, basePath?: string) => Promise<string> {
             const localVarFetchArgs = AuthenticationApiFetchParamCreator(configuration).oauthclientAntiforgeryGet(options);
-            return (fetch: FetchAPI = isomorphicFetch, basePath: string = BASE_PATH) => {
+            return (fetch: NodeFetch = nodeFetch.default, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
                         return response.json();
@@ -8473,9 +8473,9 @@ export const AuthenticationApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        oauthclientInfoGet(clientId?: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<OauthClientInfo> {
+        oauthclientInfoGet(clientId?: string, options?: any): (fetch?: NodeFetch, basePath?: string) => Promise<OauthClientInfo> {
             const localVarFetchArgs = AuthenticationApiFetchParamCreator(configuration).oauthclientInfoGet(clientId, options);
-            return (fetch: FetchAPI = isomorphicFetch, basePath: string = BASE_PATH) => {
+            return (fetch: NodeFetch = nodeFetch.default, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
                         return response.json();
@@ -8492,9 +8492,9 @@ export const AuthenticationApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        signinApprovePost(returnUrl?: string, leaderboardId?: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<Response> {
+        signinApprovePost(returnUrl?: string, leaderboardId?: string, options?: any): (fetch?: NodeFetch, basePath?: string) => Promise<nodeFetch.Response> {
             const localVarFetchArgs = AuthenticationApiFetchParamCreator(configuration).signinApprovePost(returnUrl, leaderboardId, options);
-            return (fetch: FetchAPI = isomorphicFetch, basePath: string = BASE_PATH) => {
+            return (fetch: NodeFetch = nodeFetch.default, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
                         return response;
@@ -8509,9 +8509,9 @@ export const AuthenticationApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        signinGet(options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<Response> {
+        signinGet(options?: any): (fetch?: NodeFetch, basePath?: string) => Promise<nodeFetch.Response> {
             const localVarFetchArgs = AuthenticationApiFetchParamCreator(configuration).signinGet(options);
-            return (fetch: FetchAPI = isomorphicFetch, basePath: string = BASE_PATH) => {
+            return (fetch: NodeFetch = nodeFetch.default, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
                         return response;
@@ -8529,9 +8529,9 @@ export const AuthenticationApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        signinPost(provider?: string, returnUrl?: string, oauthState?: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<Response> {
+        signinPost(provider?: string, returnUrl?: string, oauthState?: string, options?: any): (fetch?: NodeFetch, basePath?: string) => Promise<nodeFetch.Response> {
             const localVarFetchArgs = AuthenticationApiFetchParamCreator(configuration).signinPost(provider, returnUrl, oauthState, options);
-            return (fetch: FetchAPI = isomorphicFetch, basePath: string = BASE_PATH) => {
+            return (fetch: NodeFetch = nodeFetch.default, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
                         return response;
@@ -8549,9 +8549,9 @@ export const AuthenticationApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        signinmigrateOculuspcPost(provider?: string, returnUrl?: string, token?: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<Response> {
+        signinmigrateOculuspcPost(provider?: string, returnUrl?: string, token?: string, options?: any): (fetch?: NodeFetch, basePath?: string) => Promise<nodeFetch.Response> {
             const localVarFetchArgs = AuthenticationApiFetchParamCreator(configuration).signinmigrateOculuspcPost(provider, returnUrl, token, options);
-            return (fetch: FetchAPI = isomorphicFetch, basePath: string = BASE_PATH) => {
+            return (fetch: NodeFetch = nodeFetch.default, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
                         return response;
@@ -8568,9 +8568,9 @@ export const AuthenticationApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        signinmigratePost(provider?: string, returnUrl?: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<Response> {
+        signinmigratePost(provider?: string, returnUrl?: string, options?: any): (fetch?: NodeFetch, basePath?: string) => Promise<nodeFetch.Response> {
             const localVarFetchArgs = AuthenticationApiFetchParamCreator(configuration).signinmigratePost(provider, returnUrl, options);
-            return (fetch: FetchAPI = isomorphicFetch, basePath: string = BASE_PATH) => {
+            return (fetch: NodeFetch = nodeFetch.default, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
                         return response;
@@ -8587,9 +8587,9 @@ export const AuthenticationApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        signinoculusOculuspcPost(token?: string, returnUrl?: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<Response> {
+        signinoculusOculuspcPost(token?: string, returnUrl?: string, options?: any): (fetch?: NodeFetch, basePath?: string) => Promise<nodeFetch.Response> {
             const localVarFetchArgs = AuthenticationApiFetchParamCreator(configuration).signinoculusOculuspcPost(token, returnUrl, options);
-            return (fetch: FetchAPI = isomorphicFetch, basePath: string = BASE_PATH) => {
+            return (fetch: NodeFetch = nodeFetch.default, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
                         return response;
@@ -8605,9 +8605,9 @@ export const AuthenticationApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        signinoculusPost(oauthState?: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<Response> {
+        signinoculusPost(oauthState?: string, options?: any): (fetch?: NodeFetch, basePath?: string) => Promise<nodeFetch.Response> {
             const localVarFetchArgs = AuthenticationApiFetchParamCreator(configuration).signinoculusPost(oauthState, options);
-            return (fetch: FetchAPI = isomorphicFetch, basePath: string = BASE_PATH) => {
+            return (fetch: NodeFetch = nodeFetch.default, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
                         return response;
@@ -8622,9 +8622,9 @@ export const AuthenticationApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        signoutGet(options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<Response> {
+        signoutGet(options?: any): (fetch?: NodeFetch, basePath?: string) => Promise<nodeFetch.Response> {
             const localVarFetchArgs = AuthenticationApiFetchParamCreator(configuration).signoutGet(options);
-            return (fetch: FetchAPI = isomorphicFetch, basePath: string = BASE_PATH) => {
+            return (fetch: NodeFetch = nodeFetch.default, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
                         return response;
@@ -8639,9 +8639,9 @@ export const AuthenticationApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        signoutPost(options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<Response> {
+        signoutPost(options?: any): (fetch?: NodeFetch, basePath?: string) => Promise<nodeFetch.Response> {
             const localVarFetchArgs = AuthenticationApiFetchParamCreator(configuration).signoutPost(options);
-            return (fetch: FetchAPI = isomorphicFetch, basePath: string = BASE_PATH) => {
+            return (fetch: NodeFetch = nodeFetch.default, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
                         return response;
@@ -8660,9 +8660,9 @@ export const AuthenticationApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        steamcallbackGet(returnUrl?: string, random?: number, migrateTo?: string, oauthState?: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<Response> {
+        steamcallbackGet(returnUrl?: string, random?: number, migrateTo?: string, oauthState?: string, options?: any): (fetch?: NodeFetch, basePath?: string) => Promise<nodeFetch.Response> {
             const localVarFetchArgs = AuthenticationApiFetchParamCreator(configuration).steamcallbackGet(returnUrl, random, migrateTo, oauthState, options);
-            return (fetch: FetchAPI = isomorphicFetch, basePath: string = BASE_PATH) => {
+            return (fetch: NodeFetch = nodeFetch.default, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
                         return response;
@@ -8679,7 +8679,7 @@ export const AuthenticationApiFp = function(configuration?: Configuration) {
  * AuthenticationApi - factory interface
  * @export
  */
-export const AuthenticationApiFactory = function (configuration?: Configuration, fetch?: FetchAPI, basePath?: string) {
+export const AuthenticationApiFactory = function (configuration?: Configuration, fetch?: NodeFetch, basePath?: string) {
     return {
         /**
          * 
@@ -9002,7 +9002,7 @@ export class AuthenticationApi extends BaseAPI {
  * BackupApi - fetch parameter creator
  * @export
  */
-export const BackupApiFetchParamCreator = function (configuration?: Configuration) {
+export const BackupApiFetchParamCreator = function (_configuration?: Configuration) {
     return {
         /**
          * 
@@ -9054,9 +9054,9 @@ export const BackupApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        backupFileContainerFilenameGet(container: S3Container, filename: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<Response> {
+        backupFileContainerFilenameGet(container: S3Container, filename: string, options?: any): (fetch?: NodeFetch, basePath?: string) => Promise<nodeFetch.Response> {
             const localVarFetchArgs = BackupApiFetchParamCreator(configuration).backupFileContainerFilenameGet(container, filename, options);
-            return (fetch: FetchAPI = isomorphicFetch, basePath: string = BASE_PATH) => {
+            return (fetch: NodeFetch = nodeFetch.default, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
                         return response;
@@ -9073,7 +9073,7 @@ export const BackupApiFp = function(configuration?: Configuration) {
  * BackupApi - factory interface
  * @export
  */
-export const BackupApiFactory = function (configuration?: Configuration, fetch?: FetchAPI, basePath?: string) {
+export const BackupApiFactory = function (configuration?: Configuration, fetch?: NodeFetch, basePath?: string) {
     return {
         /**
          * 
@@ -9112,7 +9112,7 @@ export class BackupApi extends BaseAPI {
  * BeatSaverApi - fetch parameter creator
  * @export
  */
-export const BeatSaverApiFetchParamCreator = function (configuration?: Configuration) {
+export const BeatSaverApiFetchParamCreator = function (_configuration?: Configuration) {
     return {
         /**
          * 
@@ -9241,9 +9241,9 @@ export const BeatSaverApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        beatsaverRefreshGet(options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<Response> {
+        beatsaverRefreshGet(options?: any): (fetch?: NodeFetch, basePath?: string) => Promise<nodeFetch.Response> {
             const localVarFetchArgs = BeatSaverApiFetchParamCreator(configuration).beatsaverRefreshGet(options);
-            return (fetch: FetchAPI = isomorphicFetch, basePath: string = BASE_PATH) => {
+            return (fetch: NodeFetch = nodeFetch.default, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
                         return response;
@@ -9259,9 +9259,9 @@ export const BeatSaverApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        userApproveQualificationGet(leaderboardId?: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<Response> {
+        userApproveQualificationGet(leaderboardId?: string, options?: any): (fetch?: NodeFetch, basePath?: string) => Promise<nodeFetch.Response> {
             const localVarFetchArgs = BeatSaverApiFetchParamCreator(configuration).userApproveQualificationGet(leaderboardId, options);
-            return (fetch: FetchAPI = isomorphicFetch, basePath: string = BASE_PATH) => {
+            return (fetch: NodeFetch = nodeFetch.default, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
                         return response;
@@ -9278,9 +9278,9 @@ export const BeatSaverApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        userLinkBeatSaverAndApproveGet(leaderboardId?: string, returnUrl?: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<Response> {
+        userLinkBeatSaverAndApproveGet(leaderboardId?: string, returnUrl?: string, options?: any): (fetch?: NodeFetch, basePath?: string) => Promise<nodeFetch.Response> {
             const localVarFetchArgs = BeatSaverApiFetchParamCreator(configuration).userLinkBeatSaverAndApproveGet(leaderboardId, returnUrl, options);
-            return (fetch: FetchAPI = isomorphicFetch, basePath: string = BASE_PATH) => {
+            return (fetch: NodeFetch = nodeFetch.default, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
                         return response;
@@ -9297,9 +9297,9 @@ export const BeatSaverApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        userLinkBeatSaverGet(returnUrl?: string, oauthState?: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<Response> {
+        userLinkBeatSaverGet(returnUrl?: string, oauthState?: string, options?: any): (fetch?: NodeFetch, basePath?: string) => Promise<nodeFetch.Response> {
             const localVarFetchArgs = BeatSaverApiFetchParamCreator(configuration).userLinkBeatSaverGet(returnUrl, oauthState, options);
-            return (fetch: FetchAPI = isomorphicFetch, basePath: string = BASE_PATH) => {
+            return (fetch: NodeFetch = nodeFetch.default, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
                         return response;
@@ -9316,7 +9316,7 @@ export const BeatSaverApiFp = function(configuration?: Configuration) {
  * BeatSaverApi - factory interface
  * @export
  */
-export const BeatSaverApiFactory = function (configuration?: Configuration, fetch?: FetchAPI, basePath?: string) {
+export const BeatSaverApiFactory = function (configuration?: Configuration, fetch?: NodeFetch, basePath?: string) {
     return {
         /**
          * 
@@ -9415,7 +9415,7 @@ export class BeatSaverApi extends BaseAPI {
  * ClanApi - fetch parameter creator
  * @export
  */
-export const ClanApiFetchParamCreator = function (configuration?: Configuration) {
+export const ClanApiFetchParamCreator = function (_configuration?: Configuration) {
     return {
         /**
          * 
@@ -9921,9 +9921,9 @@ export const ClanApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        clanAcceptPost(id?: number, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<Response> {
+        clanAcceptPost(id?: number, options?: any): (fetch?: NodeFetch, basePath?: string) => Promise<nodeFetch.Response> {
             const localVarFetchArgs = ClanApiFetchParamCreator(configuration).clanAcceptPost(id, options);
-            return (fetch: FetchAPI = isomorphicFetch, basePath: string = BASE_PATH) => {
+            return (fetch: NodeFetch = nodeFetch.default, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
                         return response;
@@ -9939,9 +9939,9 @@ export const ClanApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        clanCancelinvitePost(player?: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<Response> {
+        clanCancelinvitePost(player?: string, options?: any): (fetch?: NodeFetch, basePath?: string) => Promise<nodeFetch.Response> {
             const localVarFetchArgs = ClanApiFetchParamCreator(configuration).clanCancelinvitePost(player, options);
-            return (fetch: FetchAPI = isomorphicFetch, basePath: string = BASE_PATH) => {
+            return (fetch: NodeFetch = nodeFetch.default, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
                         return response;
@@ -9961,9 +9961,9 @@ export const ClanApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        clanCreatePost(name?: string, tag?: string, color?: string, description?: string, bio?: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<Clan> {
+        clanCreatePost(name?: string, tag?: string, color?: string, description?: string, bio?: string, options?: any): (fetch?: NodeFetch, basePath?: string) => Promise<Clan> {
             const localVarFetchArgs = ClanApiFetchParamCreator(configuration).clanCreatePost(name, tag, color, description, bio, options);
-            return (fetch: FetchAPI = isomorphicFetch, basePath: string = BASE_PATH) => {
+            return (fetch: NodeFetch = nodeFetch.default, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
                         return response.json();
@@ -9979,9 +9979,9 @@ export const ClanApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        clanDelete(id?: number, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<Response> {
+        clanDelete(id?: number, options?: any): (fetch?: NodeFetch, basePath?: string) => Promise<nodeFetch.Response> {
             const localVarFetchArgs = ClanApiFetchParamCreator(configuration).clanDelete(id, options);
-            return (fetch: FetchAPI = isomorphicFetch, basePath: string = BASE_PATH) => {
+            return (fetch: NodeFetch = nodeFetch.default, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
                         return response;
@@ -9997,9 +9997,9 @@ export const ClanApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        clanInvitePost(player?: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<Response> {
+        clanInvitePost(player?: string, options?: any): (fetch?: NodeFetch, basePath?: string) => Promise<nodeFetch.Response> {
             const localVarFetchArgs = ClanApiFetchParamCreator(configuration).clanInvitePost(player, options);
-            return (fetch: FetchAPI = isomorphicFetch, basePath: string = BASE_PATH) => {
+            return (fetch: NodeFetch = nodeFetch.default, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
                         return response;
@@ -10016,9 +10016,9 @@ export const ClanApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        clanKickplayerPost(player?: string, id?: number, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<Response> {
+        clanKickplayerPost(player?: string, id?: number, options?: any): (fetch?: NodeFetch, basePath?: string) => Promise<nodeFetch.Response> {
             const localVarFetchArgs = ClanApiFetchParamCreator(configuration).clanKickplayerPost(player, id, options);
-            return (fetch: FetchAPI = isomorphicFetch, basePath: string = BASE_PATH) => {
+            return (fetch: NodeFetch = nodeFetch.default, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
                         return response;
@@ -10034,9 +10034,9 @@ export const ClanApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        clanLeavePost(id?: number, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<Response> {
+        clanLeavePost(id?: number, options?: any): (fetch?: NodeFetch, basePath?: string) => Promise<nodeFetch.Response> {
             const localVarFetchArgs = ClanApiFetchParamCreator(configuration).clanLeavePost(id, options);
-            return (fetch: FetchAPI = isomorphicFetch, basePath: string = BASE_PATH) => {
+            return (fetch: NodeFetch = nodeFetch.default, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
                         return response;
@@ -10056,9 +10056,9 @@ export const ClanApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        clanPut(id?: number, name?: string, color?: string, description?: string, bio?: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<Response> {
+        clanPut(id?: number, name?: string, color?: string, description?: string, bio?: string, options?: any): (fetch?: NodeFetch, basePath?: string) => Promise<nodeFetch.Response> {
             const localVarFetchArgs = ClanApiFetchParamCreator(configuration).clanPut(id, name, color, description, bio, options);
-            return (fetch: FetchAPI = isomorphicFetch, basePath: string = BASE_PATH) => {
+            return (fetch: NodeFetch = nodeFetch.default, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
                         return response;
@@ -10075,9 +10075,9 @@ export const ClanApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        clanRejectPost(id?: number, ban?: boolean, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<Response> {
+        clanRejectPost(id?: number, ban?: boolean, options?: any): (fetch?: NodeFetch, basePath?: string) => Promise<nodeFetch.Response> {
             const localVarFetchArgs = ClanApiFetchParamCreator(configuration).clanRejectPost(id, ban, options);
-            return (fetch: FetchAPI = isomorphicFetch, basePath: string = BASE_PATH) => {
+            return (fetch: NodeFetch = nodeFetch.default, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
                         return response;
@@ -10093,9 +10093,9 @@ export const ClanApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        clanReserveDelete(tag?: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<Response> {
+        clanReserveDelete(tag?: string, options?: any): (fetch?: NodeFetch, basePath?: string) => Promise<nodeFetch.Response> {
             const localVarFetchArgs = ClanApiFetchParamCreator(configuration).clanReserveDelete(tag, options);
-            return (fetch: FetchAPI = isomorphicFetch, basePath: string = BASE_PATH) => {
+            return (fetch: NodeFetch = nodeFetch.default, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
                         return response;
@@ -10111,9 +10111,9 @@ export const ClanApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        clanReservePost(tag?: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<Response> {
+        clanReservePost(tag?: string, options?: any): (fetch?: NodeFetch, basePath?: string) => Promise<nodeFetch.Response> {
             const localVarFetchArgs = ClanApiFetchParamCreator(configuration).clanReservePost(tag, options);
-            return (fetch: FetchAPI = isomorphicFetch, basePath: string = BASE_PATH) => {
+            return (fetch: NodeFetch = nodeFetch.default, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
                         return response;
@@ -10135,9 +10135,9 @@ export const ClanApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        clanTagGet(tag: string, page?: number, count?: number, sort?: string, order?: Order, search?: string, type?: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<PlayerResponseClanResponseWithMetadataAndContainer> {
+        clanTagGet(tag: string, page?: number, count?: number, sort?: string, order?: Order, search?: string, type?: string, options?: any): (fetch?: NodeFetch, basePath?: string) => Promise<PlayerResponseClanResponseWithMetadataAndContainer> {
             const localVarFetchArgs = ClanApiFetchParamCreator(configuration).clanTagGet(tag, page, count, sort, order, search, type, options);
-            return (fetch: FetchAPI = isomorphicFetch, basePath: string = BASE_PATH) => {
+            return (fetch: NodeFetch = nodeFetch.default, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
                         return response.json();
@@ -10153,9 +10153,9 @@ export const ClanApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        clanUnbanPost(id?: number, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<Response> {
+        clanUnbanPost(id?: number, options?: any): (fetch?: NodeFetch, basePath?: string) => Promise<nodeFetch.Response> {
             const localVarFetchArgs = ClanApiFetchParamCreator(configuration).clanUnbanPost(id, options);
-            return (fetch: FetchAPI = isomorphicFetch, basePath: string = BASE_PATH) => {
+            return (fetch: NodeFetch = nodeFetch.default, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
                         return response;
@@ -10177,9 +10177,9 @@ export const ClanApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        clansGet(page?: number, count?: number, sort?: string, order?: Order, search?: string, type?: string, sortBy?: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<ClanResponseWithMetadata> {
+        clansGet(page?: number, count?: number, sort?: string, order?: Order, search?: string, type?: string, sortBy?: string, options?: any): (fetch?: NodeFetch, basePath?: string) => Promise<ClanResponseWithMetadata> {
             const localVarFetchArgs = ClanApiFetchParamCreator(configuration).clansGet(page, count, sort, order, search, type, sortBy, options);
-            return (fetch: FetchAPI = isomorphicFetch, basePath: string = BASE_PATH) => {
+            return (fetch: NodeFetch = nodeFetch.default, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
                         return response.json();
@@ -10196,7 +10196,7 @@ export const ClanApiFp = function(configuration?: Configuration) {
  * ClanApi - factory interface
  * @export
  */
-export const ClanApiFactory = function (configuration?: Configuration, fetch?: FetchAPI, basePath?: string) {
+export const ClanApiFactory = function (configuration?: Configuration, fetch?: NodeFetch, basePath?: string) {
     return {
         /**
          * 
@@ -10537,7 +10537,7 @@ export class ClanApi extends BaseAPI {
  * CurrentUserApi - fetch parameter creator
  * @export
  */
-export const CurrentUserApiFetchParamCreator = function (configuration?: Configuration) {
+export const CurrentUserApiFetchParamCreator = function (_configuration?: Configuration) {
     return {
         /**
          * 
@@ -11213,9 +11213,9 @@ export const CurrentUserApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        userBanPost(id?: string, reason?: string, duration?: number, bot?: boolean, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<Response> {
+        userBanPost(id?: string, reason?: string, duration?: number, bot?: boolean, options?: any): (fetch?: NodeFetch, basePath?: string) => Promise<nodeFetch.Response> {
             const localVarFetchArgs = CurrentUserApiFetchParamCreator(configuration).userBanPost(id, reason, duration, bot, options);
-            return (fetch: FetchAPI = isomorphicFetch, basePath: string = BASE_PATH) => {
+            return (fetch: NodeFetch = nodeFetch.default, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
                         return response;
@@ -11231,9 +11231,9 @@ export const CurrentUserApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        userChangeLoginPatch(newLogin?: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<Response> {
+        userChangeLoginPatch(newLogin?: string, options?: any): (fetch?: NodeFetch, basePath?: string) => Promise<nodeFetch.Response> {
             const localVarFetchArgs = CurrentUserApiFetchParamCreator(configuration).userChangeLoginPatch(newLogin, options);
-            return (fetch: FetchAPI = isomorphicFetch, basePath: string = BASE_PATH) => {
+            return (fetch: NodeFetch = nodeFetch.default, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
                         return response;
@@ -11251,9 +11251,9 @@ export const CurrentUserApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        userChangePasswordPatch(login?: string, oldPassword?: string, newPassword?: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<Response> {
+        userChangePasswordPatch(login?: string, oldPassword?: string, newPassword?: string, options?: any): (fetch?: NodeFetch, basePath?: string) => Promise<nodeFetch.Response> {
             const localVarFetchArgs = CurrentUserApiFetchParamCreator(configuration).userChangePasswordPatch(login, oldPassword, newPassword, options);
-            return (fetch: FetchAPI = isomorphicFetch, basePath: string = BASE_PATH) => {
+            return (fetch: NodeFetch = nodeFetch.default, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
                         return response;
@@ -11269,9 +11269,9 @@ export const CurrentUserApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        userCoverDelete(id?: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<Response> {
+        userCoverDelete(id?: string, options?: any): (fetch?: NodeFetch, basePath?: string) => Promise<nodeFetch.Response> {
             const localVarFetchArgs = CurrentUserApiFetchParamCreator(configuration).userCoverDelete(id, options);
-            return (fetch: FetchAPI = isomorphicFetch, basePath: string = BASE_PATH) => {
+            return (fetch: NodeFetch = nodeFetch.default, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
                         return response;
@@ -11287,9 +11287,9 @@ export const CurrentUserApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        userCoverPatch(id?: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<Response> {
+        userCoverPatch(id?: string, options?: any): (fetch?: NodeFetch, basePath?: string) => Promise<nodeFetch.Response> {
             const localVarFetchArgs = CurrentUserApiFetchParamCreator(configuration).userCoverPatch(id, options);
-            return (fetch: FetchAPI = isomorphicFetch, basePath: string = BASE_PATH) => {
+            return (fetch: NodeFetch = nodeFetch.default, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
                         return response;
@@ -11305,9 +11305,9 @@ export const CurrentUserApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        userFailedscoreFalsepositivePost(id?: number, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<Response> {
+        userFailedscoreFalsepositivePost(id?: number, options?: any): (fetch?: NodeFetch, basePath?: string) => Promise<nodeFetch.Response> {
             const localVarFetchArgs = CurrentUserApiFetchParamCreator(configuration).userFailedscoreFalsepositivePost(id, options);
-            return (fetch: FetchAPI = isomorphicFetch, basePath: string = BASE_PATH) => {
+            return (fetch: NodeFetch = nodeFetch.default, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
                         return response;
@@ -11323,9 +11323,9 @@ export const CurrentUserApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        userFailedscoreRemovePost(id?: number, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<Response> {
+        userFailedscoreRemovePost(id?: number, options?: any): (fetch?: NodeFetch, basePath?: string) => Promise<nodeFetch.Response> {
             const localVarFetchArgs = CurrentUserApiFetchParamCreator(configuration).userFailedscoreRemovePost(id, options);
-            return (fetch: FetchAPI = isomorphicFetch, basePath: string = BASE_PATH) => {
+            return (fetch: NodeFetch = nodeFetch.default, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
                         return response;
@@ -11342,9 +11342,9 @@ export const CurrentUserApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        userFailedscoreRetryPost(id?: number, allow?: boolean, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<ScoreResponse> {
+        userFailedscoreRetryPost(id?: number, allow?: boolean, options?: any): (fetch?: NodeFetch, basePath?: string) => Promise<ScoreResponse> {
             const localVarFetchArgs = CurrentUserApiFetchParamCreator(configuration).userFailedscoreRetryPost(id, allow, options);
-            return (fetch: FetchAPI = isomorphicFetch, basePath: string = BASE_PATH) => {
+            return (fetch: NodeFetch = nodeFetch.default, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
                         return response.json();
@@ -11362,9 +11362,9 @@ export const CurrentUserApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        userFailedscoresGet(page?: number, count?: number, id?: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<FailedScoreResponseWithMetadata> {
+        userFailedscoresGet(page?: number, count?: number, id?: string, options?: any): (fetch?: NodeFetch, basePath?: string) => Promise<FailedScoreResponseWithMetadata> {
             const localVarFetchArgs = CurrentUserApiFetchParamCreator(configuration).userFailedscoresGet(page, count, id, options);
-            return (fetch: FetchAPI = isomorphicFetch, basePath: string = BASE_PATH) => {
+            return (fetch: NodeFetch = nodeFetch.default, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
                         return response.json();
@@ -11380,9 +11380,9 @@ export const CurrentUserApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        userFriendDelete(playerId?: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<Response> {
+        userFriendDelete(playerId?: string, options?: any): (fetch?: NodeFetch, basePath?: string) => Promise<nodeFetch.Response> {
             const localVarFetchArgs = CurrentUserApiFetchParamCreator(configuration).userFriendDelete(playerId, options);
-            return (fetch: FetchAPI = isomorphicFetch, basePath: string = BASE_PATH) => {
+            return (fetch: NodeFetch = nodeFetch.default, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
                         return response;
@@ -11398,9 +11398,9 @@ export const CurrentUserApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        userFriendPost(playerId?: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<Response> {
+        userFriendPost(playerId?: string, options?: any): (fetch?: NodeFetch, basePath?: string) => Promise<nodeFetch.Response> {
             const localVarFetchArgs = CurrentUserApiFetchParamCreator(configuration).userFriendPost(playerId, options);
-            return (fetch: FetchAPI = isomorphicFetch, basePath: string = BASE_PATH) => {
+            return (fetch: NodeFetch = nodeFetch.default, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
                         return response;
@@ -11415,9 +11415,9 @@ export const CurrentUserApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        userGet(options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<UserReturn> {
+        userGet(options?: any): (fetch?: NodeFetch, basePath?: string) => Promise<UserReturn> {
             const localVarFetchArgs = CurrentUserApiFetchParamCreator(configuration).userGet(options);
-            return (fetch: FetchAPI = isomorphicFetch, basePath: string = BASE_PATH) => {
+            return (fetch: NodeFetch = nodeFetch.default, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
                         return response.json();
@@ -11433,9 +11433,9 @@ export const CurrentUserApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        userHideopscoresPost(id?: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<Response> {
+        userHideopscoresPost(id?: string, options?: any): (fetch?: NodeFetch, basePath?: string) => Promise<nodeFetch.Response> {
             const localVarFetchArgs = CurrentUserApiFetchParamCreator(configuration).userHideopscoresPost(id, options);
-            return (fetch: FetchAPI = isomorphicFetch, basePath: string = BASE_PATH) => {
+            return (fetch: NodeFetch = nodeFetch.default, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
                         return response;
@@ -11450,9 +11450,9 @@ export const CurrentUserApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        userIdGet(options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<string> {
+        userIdGet(options?: any): (fetch?: NodeFetch, basePath?: string) => Promise<string> {
             const localVarFetchArgs = CurrentUserApiFetchParamCreator(configuration).userIdGet(options);
-            return (fetch: FetchAPI = isomorphicFetch, basePath: string = BASE_PATH) => {
+            return (fetch: NodeFetch = nodeFetch.default, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
                         return response.json();
@@ -11469,9 +11469,9 @@ export const CurrentUserApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        userMigratePost(login?: string, password?: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<number> {
+        userMigratePost(login?: string, password?: string, options?: any): (fetch?: NodeFetch, basePath?: string) => Promise<number> {
             const localVarFetchArgs = CurrentUserApiFetchParamCreator(configuration).userMigratePost(login, password, options);
-            return (fetch: FetchAPI = isomorphicFetch, basePath: string = BASE_PATH) => {
+            return (fetch: NodeFetch = nodeFetch.default, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
                         return response.json();
@@ -11488,9 +11488,9 @@ export const CurrentUserApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        userMigrateoculuspcGet(returnUrl?: string, token?: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<number> {
+        userMigrateoculuspcGet(returnUrl?: string, token?: string, options?: any): (fetch?: NodeFetch, basePath?: string) => Promise<number> {
             const localVarFetchArgs = CurrentUserApiFetchParamCreator(configuration).userMigrateoculuspcGet(returnUrl, token, options);
-            return (fetch: FetchAPI = isomorphicFetch, basePath: string = BASE_PATH) => {
+            return (fetch: NodeFetch = nodeFetch.default, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
                         return response.json();
@@ -11505,9 +11505,9 @@ export const CurrentUserApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        userModinterfaceGet(options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<PlayerResponseWithFriends> {
+        userModinterfaceGet(options?: any): (fetch?: NodeFetch, basePath?: string) => Promise<PlayerResponseWithFriends> {
             const localVarFetchArgs = CurrentUserApiFetchParamCreator(configuration).userModinterfaceGet(options);
-            return (fetch: FetchAPI = isomorphicFetch, basePath: string = BASE_PATH) => {
+            return (fetch: NodeFetch = nodeFetch.default, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
                         return response.json();
@@ -11535,9 +11535,9 @@ export const CurrentUserApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        userPatch(name?: string, country?: string, profileAppearance?: string, message?: string, hue?: number, saturation?: number, effectName?: string, leftSaberColor?: string, rightSaberColor?: string, starredFriends?: string, showBots?: boolean, showAllRatings?: boolean, id?: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<Response> {
+        userPatch(name?: string, country?: string, profileAppearance?: string, message?: string, hue?: number, saturation?: number, effectName?: string, leftSaberColor?: string, rightSaberColor?: string, starredFriends?: string, showBots?: boolean, showAllRatings?: boolean, id?: string, options?: any): (fetch?: NodeFetch, basePath?: string) => Promise<nodeFetch.Response> {
             const localVarFetchArgs = CurrentUserApiFetchParamCreator(configuration).userPatch(name, country, profileAppearance, message, hue, saturation, effectName, leftSaberColor, rightSaberColor, starredFriends, showBots, showAllRatings, id, options);
-            return (fetch: FetchAPI = isomorphicFetch, basePath: string = BASE_PATH) => {
+            return (fetch: NodeFetch = nodeFetch.default, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
                         return response;
@@ -11554,9 +11554,9 @@ export const CurrentUserApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        userResetPasswordPatch(login?: string, newPassword?: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<Response> {
+        userResetPasswordPatch(login?: string, newPassword?: string, options?: any): (fetch?: NodeFetch, basePath?: string) => Promise<nodeFetch.Response> {
             const localVarFetchArgs = CurrentUserApiFetchParamCreator(configuration).userResetPasswordPatch(login, newPassword, options);
-            return (fetch: FetchAPI = isomorphicFetch, basePath: string = BASE_PATH) => {
+            return (fetch: NodeFetch = nodeFetch.default, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
                         return response;
@@ -11572,9 +11572,9 @@ export const CurrentUserApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        userUnbanPost(id?: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<Response> {
+        userUnbanPost(id?: string, options?: any): (fetch?: NodeFetch, basePath?: string) => Promise<nodeFetch.Response> {
             const localVarFetchArgs = CurrentUserApiFetchParamCreator(configuration).userUnbanPost(id, options);
-            return (fetch: FetchAPI = isomorphicFetch, basePath: string = BASE_PATH) => {
+            return (fetch: NodeFetch = nodeFetch.default, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
                         return response;
@@ -11591,7 +11591,7 @@ export const CurrentUserApiFp = function(configuration?: Configuration) {
  * CurrentUserApi - factory interface
  * @export
  */
-export const CurrentUserApiFactory = function (configuration?: Configuration, fetch?: FetchAPI, basePath?: string) {
+export const CurrentUserApiFactory = function (configuration?: Configuration, fetch?: NodeFetch, basePath?: string) {
     return {
         /**
          * 
@@ -12048,7 +12048,7 @@ export class CurrentUserApi extends BaseAPI {
  * FriendsApi - fetch parameter creator
  * @export
  */
-export const FriendsApiFetchParamCreator = function (configuration?: Configuration) {
+export const FriendsApiFetchParamCreator = function (_configuration?: Configuration) {
     return {
         /**
          * 
@@ -12200,9 +12200,9 @@ export const FriendsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        userFriendActivityGet(id?: string, sortBy?: string, order?: Order, page?: number, count?: number, search?: string, type?: FriendActivityType, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<FriendActivityResponseWithMetadata> {
+        userFriendActivityGet(id?: string, sortBy?: string, order?: Order, page?: number, count?: number, search?: string, type?: FriendActivityType, options?: any): (fetch?: NodeFetch, basePath?: string) => Promise<FriendActivityResponseWithMetadata> {
             const localVarFetchArgs = FriendsApiFetchParamCreator(configuration).userFriendActivityGet(id, sortBy, order, page, count, search, type, options);
-            return (fetch: FetchAPI = isomorphicFetch, basePath: string = BASE_PATH) => {
+            return (fetch: NodeFetch = nodeFetch.default, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
                         return response.json();
@@ -12227,9 +12227,9 @@ export const FriendsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        userFriendScoresGet(id?: string, sortBy?: string, order?: Order, page?: number, count?: number, search?: string, diff?: string, type?: string, starsFrom?: number, starsTo?: number, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<ScoreResponseWithMyScoreResponseWithMetadata> {
+        userFriendScoresGet(id?: string, sortBy?: string, order?: Order, page?: number, count?: number, search?: string, diff?: string, type?: string, starsFrom?: number, starsTo?: number, options?: any): (fetch?: NodeFetch, basePath?: string) => Promise<ScoreResponseWithMyScoreResponseWithMetadata> {
             const localVarFetchArgs = FriendsApiFetchParamCreator(configuration).userFriendScoresGet(id, sortBy, order, page, count, search, diff, type, starsFrom, starsTo, options);
-            return (fetch: FetchAPI = isomorphicFetch, basePath: string = BASE_PATH) => {
+            return (fetch: NodeFetch = nodeFetch.default, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
                         return response.json();
@@ -12246,7 +12246,7 @@ export const FriendsApiFp = function(configuration?: Configuration) {
  * FriendsApi - factory interface
  * @export
  */
-export const FriendsApiFactory = function (configuration?: Configuration, fetch?: FetchAPI, basePath?: string) {
+export const FriendsApiFactory = function (configuration?: Configuration, fetch?: NodeFetch, basePath?: string) {
     return {
         /**
          * 
@@ -12333,7 +12333,7 @@ export class FriendsApi extends BaseAPI {
  * LeaderboardApi - fetch parameter creator
  * @export
  */
-export const LeaderboardApiFetchParamCreator = function (configuration?: Configuration) {
+export const LeaderboardApiFetchParamCreator = function (_configuration?: Configuration) {
     return {
         /**
          * 
@@ -12813,9 +12813,9 @@ export const LeaderboardApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        leaderboardIdGet(id: string, page?: number, count?: number, sortBy?: string, order?: Order, scoreStatus?: ScoreFilterStatus, countries?: string, search?: string, modifiers?: string, friends?: boolean, voters?: boolean, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<LeaderboardResponse> {
+        leaderboardIdGet(id: string, page?: number, count?: number, sortBy?: string, order?: Order, scoreStatus?: ScoreFilterStatus, countries?: string, search?: string, modifiers?: string, friends?: boolean, voters?: boolean, options?: any): (fetch?: NodeFetch, basePath?: string) => Promise<LeaderboardResponse> {
             const localVarFetchArgs = LeaderboardApiFetchParamCreator(configuration).leaderboardIdGet(id, page, count, sortBy, order, scoreStatus, countries, search, modifiers, friends, voters, options);
-            return (fetch: FetchAPI = isomorphicFetch, basePath: string = BASE_PATH) => {
+            return (fetch: NodeFetch = nodeFetch.default, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
                         return response.json();
@@ -12831,9 +12831,9 @@ export const LeaderboardApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        leaderboardRankingIdGet(id: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<LeaderboardVoting> {
+        leaderboardRankingIdGet(id: string, options?: any): (fetch?: NodeFetch, basePath?: string) => Promise<LeaderboardVoting> {
             const localVarFetchArgs = LeaderboardApiFetchParamCreator(configuration).leaderboardRankingIdGet(id, options);
-            return (fetch: FetchAPI = isomorphicFetch, basePath: string = BASE_PATH) => {
+            return (fetch: NodeFetch = nodeFetch.default, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
                         return response.json();
@@ -12849,9 +12849,9 @@ export const LeaderboardApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        leaderboardStatisticIdGet(id: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<ScoreStatistic> {
+        leaderboardStatisticIdGet(id: string, options?: any): (fetch?: NodeFetch, basePath?: string) => Promise<ScoreStatistic> {
             const localVarFetchArgs = LeaderboardApiFetchParamCreator(configuration).leaderboardStatisticIdGet(id, options);
-            return (fetch: FetchAPI = isomorphicFetch, basePath: string = BASE_PATH) => {
+            return (fetch: NodeFetch = nodeFetch.default, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
                         return response.json();
@@ -12888,9 +12888,9 @@ export const LeaderboardApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        leaderboardsGet(page?: number, count?: number, sortBy?: SortBy, order?: Order, search?: string, type?: Type, mode?: string, mapType?: number, allTypes?: Operation, mapRequirements?: Requirements, allRequirements?: Operation, mytype?: MyType, starsFrom?: number, starsTo?: number, accratingFrom?: number, accratingTo?: number, passratingFrom?: number, passratingTo?: number, techratingFrom?: number, techratingTo?: number, dateFrom?: number, dateTo?: number, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<LeaderboardInfoResponseResponseWithMetadata> {
+        leaderboardsGet(page?: number, count?: number, sortBy?: SortBy, order?: Order, search?: string, type?: Type, mode?: string, mapType?: number, allTypes?: Operation, mapRequirements?: Requirements, allRequirements?: Operation, mytype?: MyType, starsFrom?: number, starsTo?: number, accratingFrom?: number, accratingTo?: number, passratingFrom?: number, passratingTo?: number, techratingFrom?: number, techratingTo?: number, dateFrom?: number, dateTo?: number, options?: any): (fetch?: NodeFetch, basePath?: string) => Promise<LeaderboardInfoResponseResponseWithMetadata> {
             const localVarFetchArgs = LeaderboardApiFetchParamCreator(configuration).leaderboardsGet(page, count, sortBy, order, search, type, mode, mapType, allTypes, mapRequirements, allRequirements, mytype, starsFrom, starsTo, accratingFrom, accratingTo, passratingFrom, passratingTo, techratingFrom, techratingTo, dateFrom, dateTo, options);
-            return (fetch: FetchAPI = isomorphicFetch, basePath: string = BASE_PATH) => {
+            return (fetch: NodeFetch = nodeFetch.default, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
                         return response.json();
@@ -12927,9 +12927,9 @@ export const LeaderboardApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        leaderboardsGrouppedGet(page?: number, count?: number, sortBy?: SortBy, order?: Order, search?: string, type?: Type, mode?: string, mapType?: number, allTypes?: Operation, mapRequirements?: Requirements, allRequirements?: Operation, mytype?: MyType, starsFrom?: number, starsTo?: number, accratingFrom?: number, accratingTo?: number, passratingFrom?: number, passratingTo?: number, techratingFrom?: number, techratingTo?: number, dateFrom?: number, dateTo?: number, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<LeaderboardInfoResponseResponseWithMetadata> {
+        leaderboardsGrouppedGet(page?: number, count?: number, sortBy?: SortBy, order?: Order, search?: string, type?: Type, mode?: string, mapType?: number, allTypes?: Operation, mapRequirements?: Requirements, allRequirements?: Operation, mytype?: MyType, starsFrom?: number, starsTo?: number, accratingFrom?: number, accratingTo?: number, passratingFrom?: number, passratingTo?: number, techratingFrom?: number, techratingTo?: number, dateFrom?: number, dateTo?: number, options?: any): (fetch?: NodeFetch, basePath?: string) => Promise<LeaderboardInfoResponseResponseWithMetadata> {
             const localVarFetchArgs = LeaderboardApiFetchParamCreator(configuration).leaderboardsGrouppedGet(page, count, sortBy, order, search, type, mode, mapType, allTypes, mapRequirements, allRequirements, mytype, starsFrom, starsTo, accratingFrom, accratingTo, passratingFrom, passratingTo, techratingFrom, techratingTo, dateFrom, dateTo, options);
-            return (fetch: FetchAPI = isomorphicFetch, basePath: string = BASE_PATH) => {
+            return (fetch: NodeFetch = nodeFetch.default, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
                         return response.json();
@@ -12945,9 +12945,9 @@ export const LeaderboardApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        leaderboardsHashHashGet(hash: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<LeaderboardsResponse> {
+        leaderboardsHashHashGet(hash: string, options?: any): (fetch?: NodeFetch, basePath?: string) => Promise<LeaderboardsResponse> {
             const localVarFetchArgs = LeaderboardApiFetchParamCreator(configuration).leaderboardsHashHashGet(hash, options);
-            return (fetch: FetchAPI = isomorphicFetch, basePath: string = BASE_PATH) => {
+            return (fetch: NodeFetch = nodeFetch.default, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
                         return response.json();
@@ -12963,9 +12963,9 @@ export const LeaderboardApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        leaderboardsRefreshGet(id?: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<Response> {
+        leaderboardsRefreshGet(id?: string, options?: any): (fetch?: NodeFetch, basePath?: string) => Promise<nodeFetch.Response> {
             const localVarFetchArgs = LeaderboardApiFetchParamCreator(configuration).leaderboardsRefreshGet(id, options);
-            return (fetch: FetchAPI = isomorphicFetch, basePath: string = BASE_PATH) => {
+            return (fetch: NodeFetch = nodeFetch.default, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
                         return response;
@@ -12982,7 +12982,7 @@ export const LeaderboardApiFp = function(configuration?: Configuration) {
  * LeaderboardApi - factory interface
  * @export
  */
-export const LeaderboardApiFactory = function (configuration?: Configuration, fetch?: FetchAPI, basePath?: string) {
+export const LeaderboardApiFactory = function (configuration?: Configuration, fetch?: NodeFetch, basePath?: string) {
     return {
         /**
          * 
@@ -13243,7 +13243,7 @@ export class LeaderboardApi extends BaseAPI {
  * MapEvaluationApi - fetch parameter creator
  * @export
  */
-export const MapEvaluationApiFetchParamCreator = function (configuration?: Configuration) {
+export const MapEvaluationApiFetchParamCreator = function (_configuration?: Configuration) {
     return {
         /**
          * 
@@ -13288,9 +13288,9 @@ export const MapEvaluationApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        criteriaCheckIdGet(id: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<MapCheckResult> {
+        criteriaCheckIdGet(id: string, options?: any): (fetch?: NodeFetch, basePath?: string) => Promise<MapCheckResult> {
             const localVarFetchArgs = MapEvaluationApiFetchParamCreator(configuration).criteriaCheckIdGet(id, options);
-            return (fetch: FetchAPI = isomorphicFetch, basePath: string = BASE_PATH) => {
+            return (fetch: NodeFetch = nodeFetch.default, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
                         return response.json();
@@ -13307,7 +13307,7 @@ export const MapEvaluationApiFp = function(configuration?: Configuration) {
  * MapEvaluationApi - factory interface
  * @export
  */
-export const MapEvaluationApiFactory = function (configuration?: Configuration, fetch?: FetchAPI, basePath?: string) {
+export const MapEvaluationApiFactory = function (configuration?: Configuration, fetch?: NodeFetch, basePath?: string) {
     return {
         /**
          * 
@@ -13344,7 +13344,7 @@ export class MapEvaluationApi extends BaseAPI {
  * MiniRankingApi - fetch parameter creator
  * @export
  */
-export const MiniRankingApiFetchParamCreator = function (configuration?: Configuration) {
+export const MiniRankingApiFetchParamCreator = function (_configuration?: Configuration) {
     return {
         /**
          * 
@@ -13400,9 +13400,9 @@ export const MiniRankingApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        minirankingsGet(rank?: number, country?: string, countryRank?: number, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<MiniRankingResponse> {
+        minirankingsGet(rank?: number, country?: string, countryRank?: number, options?: any): (fetch?: NodeFetch, basePath?: string) => Promise<MiniRankingResponse> {
             const localVarFetchArgs = MiniRankingApiFetchParamCreator(configuration).minirankingsGet(rank, country, countryRank, options);
-            return (fetch: FetchAPI = isomorphicFetch, basePath: string = BASE_PATH) => {
+            return (fetch: NodeFetch = nodeFetch.default, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
                         return response.json();
@@ -13419,7 +13419,7 @@ export const MiniRankingApiFp = function(configuration?: Configuration) {
  * MiniRankingApi - factory interface
  * @export
  */
-export const MiniRankingApiFactory = function (configuration?: Configuration, fetch?: FetchAPI, basePath?: string) {
+export const MiniRankingApiFactory = function (configuration?: Configuration, fetch?: NodeFetch, basePath?: string) {
     return {
         /**
          * 
@@ -13460,7 +13460,7 @@ export class MiniRankingApi extends BaseAPI {
  * ModApi - fetch parameter creator
  * @export
  */
-export const ModApiFetchParamCreator = function (configuration?: Configuration) {
+export const ModApiFetchParamCreator = function (_configuration?: Configuration) {
     return {
         /**
          * 
@@ -13520,9 +13520,9 @@ export const ModApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        modLastVersionsGet(options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<Response> {
+        modLastVersionsGet(options?: any): (fetch?: NodeFetch, basePath?: string) => Promise<nodeFetch.Response> {
             const localVarFetchArgs = ModApiFetchParamCreator(configuration).modLastVersionsGet(options);
-            return (fetch: FetchAPI = isomorphicFetch, basePath: string = BASE_PATH) => {
+            return (fetch: NodeFetch = nodeFetch.default, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
                         return response;
@@ -13537,9 +13537,9 @@ export const ModApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        servernameGet(options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<string> {
+        servernameGet(options?: any): (fetch?: NodeFetch, basePath?: string) => Promise<string> {
             const localVarFetchArgs = ModApiFetchParamCreator(configuration).servernameGet(options);
-            return (fetch: FetchAPI = isomorphicFetch, basePath: string = BASE_PATH) => {
+            return (fetch: NodeFetch = nodeFetch.default, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
                         return response.json();
@@ -13556,7 +13556,7 @@ export const ModApiFp = function(configuration?: Configuration) {
  * ModApi - factory interface
  * @export
  */
-export const ModApiFactory = function (configuration?: Configuration, fetch?: FetchAPI, basePath?: string) {
+export const ModApiFactory = function (configuration?: Configuration, fetch?: NodeFetch, basePath?: string) {
     return {
         /**
          * 
@@ -13609,7 +13609,7 @@ export class ModApi extends BaseAPI {
  * ModifiersApi - fetch parameter creator
  * @export
  */
-export const ModifiersApiFetchParamCreator = function (configuration?: Configuration) {
+export const ModifiersApiFetchParamCreator = function (_configuration?: Configuration) {
     return {
         /**
          * 
@@ -13647,9 +13647,9 @@ export const ModifiersApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        modifiersGet(options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<{ [key: string]: number; }> {
+        modifiersGet(options?: any): (fetch?: NodeFetch, basePath?: string) => Promise<{ [key: string]: number; }> {
             const localVarFetchArgs = ModifiersApiFetchParamCreator(configuration).modifiersGet(options);
-            return (fetch: FetchAPI = isomorphicFetch, basePath: string = BASE_PATH) => {
+            return (fetch: NodeFetch = nodeFetch.default, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
                         return response.json();
@@ -13666,7 +13666,7 @@ export const ModifiersApiFp = function(configuration?: Configuration) {
  * ModifiersApi - factory interface
  * @export
  */
-export const ModifiersApiFactory = function (configuration?: Configuration, fetch?: FetchAPI, basePath?: string) {
+export const ModifiersApiFactory = function (configuration?: Configuration, fetch?: NodeFetch, basePath?: string) {
     return {
         /**
          * 
@@ -13701,7 +13701,7 @@ export class ModifiersApi extends BaseAPI {
  * PatreonApi - fetch parameter creator
  * @export
  */
-export const PatreonApiFetchParamCreator = function (configuration?: Configuration) {
+export const PatreonApiFetchParamCreator = function (_configuration?: Configuration) {
     return {
         /**
          * 
@@ -13788,9 +13788,9 @@ export const PatreonApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        refreshPatreonGet(options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<Response> {
+        refreshPatreonGet(options?: any): (fetch?: NodeFetch, basePath?: string) => Promise<nodeFetch.Response> {
             const localVarFetchArgs = PatreonApiFetchParamCreator(configuration).refreshPatreonGet(options);
-            return (fetch: FetchAPI = isomorphicFetch, basePath: string = BASE_PATH) => {
+            return (fetch: NodeFetch = nodeFetch.default, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
                         return response;
@@ -13805,9 +13805,9 @@ export const PatreonApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        refreshmypatreonGet(options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<Response> {
+        refreshmypatreonGet(options?: any): (fetch?: NodeFetch, basePath?: string) => Promise<nodeFetch.Response> {
             const localVarFetchArgs = PatreonApiFetchParamCreator(configuration).refreshmypatreonGet(options);
-            return (fetch: FetchAPI = isomorphicFetch, basePath: string = BASE_PATH) => {
+            return (fetch: NodeFetch = nodeFetch.default, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
                         return response;
@@ -13823,9 +13823,9 @@ export const PatreonApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        userLinkPatreonGet(returnUrl?: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<Response> {
+        userLinkPatreonGet(returnUrl?: string, options?: any): (fetch?: NodeFetch, basePath?: string) => Promise<nodeFetch.Response> {
             const localVarFetchArgs = PatreonApiFetchParamCreator(configuration).userLinkPatreonGet(returnUrl, options);
-            return (fetch: FetchAPI = isomorphicFetch, basePath: string = BASE_PATH) => {
+            return (fetch: NodeFetch = nodeFetch.default, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
                         return response;
@@ -13842,7 +13842,7 @@ export const PatreonApiFp = function(configuration?: Configuration) {
  * PatreonApi - factory interface
  * @export
  */
-export const PatreonApiFactory = function (configuration?: Configuration, fetch?: FetchAPI, basePath?: string) {
+export const PatreonApiFactory = function (configuration?: Configuration, fetch?: NodeFetch, basePath?: string) {
     return {
         /**
          * 
@@ -13915,7 +13915,7 @@ export class PatreonApi extends BaseAPI {
  * PlayerApi - fetch parameter creator
  * @export
  */
-export const PlayerApiFetchParamCreator = function (configuration?: Configuration) {
+export const PlayerApiFetchParamCreator = function (_configuration?: Configuration) {
     return {
         /**
          * 
@@ -14454,9 +14454,9 @@ export const PlayerApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        attemptsDelete(options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<Response> {
+        attemptsDelete(options?: any): (fetch?: NodeFetch, basePath?: string) => Promise<nodeFetch.Response> {
             const localVarFetchArgs = PlayerApiFetchParamCreator(configuration).attemptsDelete(options);
-            return (fetch: FetchAPI = isomorphicFetch, basePath: string = BASE_PATH) => {
+            return (fetch: NodeFetch = nodeFetch.default, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
                         return response;
@@ -14472,9 +14472,9 @@ export const PlayerApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        authinfoLoginDelete(login: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<Response> {
+        authinfoLoginDelete(login: string, options?: any): (fetch?: NodeFetch, basePath?: string) => Promise<nodeFetch.Response> {
             const localVarFetchArgs = PlayerApiFetchParamCreator(configuration).authinfoLoginDelete(login, options);
-            return (fetch: FetchAPI = isomorphicFetch, basePath: string = BASE_PATH) => {
+            return (fetch: NodeFetch = nodeFetch.default, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
                         return response;
@@ -14489,9 +14489,9 @@ export const PlayerApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        authipsDelete(options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<Response> {
+        authipsDelete(options?: any): (fetch?: NodeFetch, basePath?: string) => Promise<nodeFetch.Response> {
             const localVarFetchArgs = PlayerApiFetchParamCreator(configuration).authipsDelete(options);
-            return (fetch: FetchAPI = isomorphicFetch, basePath: string = BASE_PATH) => {
+            return (fetch: NodeFetch = nodeFetch.default, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
                         return response;
@@ -14510,9 +14510,9 @@ export const PlayerApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        badgeIdPut(id: number, description?: string, image?: string, link?: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<Badge> {
+        badgeIdPut(id: number, description?: string, image?: string, link?: string, options?: any): (fetch?: NodeFetch, basePath?: string) => Promise<Badge> {
             const localVarFetchArgs = PlayerApiFetchParamCreator(configuration).badgeIdPut(id, description, image, link, options);
-            return (fetch: FetchAPI = isomorphicFetch, basePath: string = BASE_PATH) => {
+            return (fetch: NodeFetch = nodeFetch.default, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
                         return response.json();
@@ -14529,9 +14529,9 @@ export const PlayerApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        badgePut(description?: string, link?: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<Badge> {
+        badgePut(description?: string, link?: string, options?: any): (fetch?: NodeFetch, basePath?: string) => Promise<Badge> {
             const localVarFetchArgs = PlayerApiFetchParamCreator(configuration).badgePut(description, link, options);
-            return (fetch: FetchAPI = isomorphicFetch, basePath: string = BASE_PATH) => {
+            return (fetch: NodeFetch = nodeFetch.default, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
                         return response.json();
@@ -14553,9 +14553,9 @@ export const PlayerApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        eventIdPlayersGet(id: number, sortBy?: string, page?: number, count?: number, search?: string, order?: Order, countries?: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<PlayerResponseWithStatsResponseWithMetadata> {
+        eventIdPlayersGet(id: number, sortBy?: string, page?: number, count?: number, search?: string, order?: Order, countries?: string, options?: any): (fetch?: NodeFetch, basePath?: string) => Promise<PlayerResponseWithStatsResponseWithMetadata> {
             const localVarFetchArgs = PlayerApiFetchParamCreator(configuration).eventIdPlayersGet(id, sortBy, page, count, search, order, countries, options);
-            return (fetch: FetchAPI = isomorphicFetch, basePath: string = BASE_PATH) => {
+            return (fetch: NodeFetch = nodeFetch.default, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
                         return response.json();
@@ -14571,9 +14571,9 @@ export const PlayerApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        oculususerGet(token?: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<OculusUser> {
+        oculususerGet(token?: string, options?: any): (fetch?: NodeFetch, basePath?: string) => Promise<OculusUser> {
             const localVarFetchArgs = PlayerApiFetchParamCreator(configuration).oculususerGet(token, options);
-            return (fetch: FetchAPI = isomorphicFetch, basePath: string = BASE_PATH) => {
+            return (fetch: NodeFetch = nodeFetch.default, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
                         return response.json();
@@ -14590,9 +14590,9 @@ export const PlayerApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        playerBadgePlayerIdBadgeIdPut(playerId: string, badgeId: number, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<Player> {
+        playerBadgePlayerIdBadgeIdPut(playerId: string, badgeId: number, options?: any): (fetch?: NodeFetch, basePath?: string) => Promise<Player> {
             const localVarFetchArgs = PlayerApiFetchParamCreator(configuration).playerBadgePlayerIdBadgeIdPut(playerId, badgeId, options);
-            return (fetch: FetchAPI = isomorphicFetch, basePath: string = BASE_PATH) => {
+            return (fetch: NodeFetch = nodeFetch.default, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
                         return response.json();
@@ -14608,9 +14608,9 @@ export const PlayerApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        playerBeatsaverIdGet(id: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<PlayerResponseFull> {
+        playerBeatsaverIdGet(id: string, options?: any): (fetch?: NodeFetch, basePath?: string) => Promise<PlayerResponseFull> {
             const localVarFetchArgs = PlayerApiFetchParamCreator(configuration).playerBeatsaverIdGet(id, options);
-            return (fetch: FetchAPI = isomorphicFetch, basePath: string = BASE_PATH) => {
+            return (fetch: NodeFetch = nodeFetch.default, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
                         return response.json();
@@ -14626,9 +14626,9 @@ export const PlayerApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        playerDiscordIdGet(id: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<PlayerResponseFull> {
+        playerDiscordIdGet(id: string, options?: any): (fetch?: NodeFetch, basePath?: string) => Promise<PlayerResponseFull> {
             const localVarFetchArgs = PlayerApiFetchParamCreator(configuration).playerDiscordIdGet(id, options);
-            return (fetch: FetchAPI = isomorphicFetch, basePath: string = BASE_PATH) => {
+            return (fetch: NodeFetch = nodeFetch.default, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
                         return response.json();
@@ -14646,9 +14646,9 @@ export const PlayerApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        playerIdGet(id: string, stats?: boolean, keepOriginalId?: boolean, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<PlayerResponseFull> {
+        playerIdGet(id: string, stats?: boolean, keepOriginalId?: boolean, options?: any): (fetch?: NodeFetch, basePath?: string) => Promise<PlayerResponseFull> {
             const localVarFetchArgs = PlayerApiFetchParamCreator(configuration).playerIdGet(id, stats, keepOriginalId, options);
-            return (fetch: FetchAPI = isomorphicFetch, basePath: string = BASE_PATH) => {
+            return (fetch: NodeFetch = nodeFetch.default, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
                         return response.json();
@@ -14664,9 +14664,9 @@ export const PlayerApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        playerlinkIdDelete(id: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<Response> {
+        playerlinkIdDelete(id: string, options?: any): (fetch?: NodeFetch, basePath?: string) => Promise<nodeFetch.Response> {
             const localVarFetchArgs = PlayerApiFetchParamCreator(configuration).playerlinkIdDelete(id, options);
-            return (fetch: FetchAPI = isomorphicFetch, basePath: string = BASE_PATH) => {
+            return (fetch: NodeFetch = nodeFetch.default, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
                         return response;
@@ -14682,9 +14682,9 @@ export const PlayerApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        playerlinkLoginGet(login: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<AccountLink> {
+        playerlinkLoginGet(login: string, options?: any): (fetch?: NodeFetch, basePath?: string) => Promise<AccountLink> {
             const localVarFetchArgs = PlayerApiFetchParamCreator(configuration).playerlinkLoginGet(login, options);
-            return (fetch: FetchAPI = isomorphicFetch, basePath: string = BASE_PATH) => {
+            return (fetch: NodeFetch = nodeFetch.default, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
                         return response.json();
@@ -14716,9 +14716,9 @@ export const PlayerApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        playersGet(sortBy?: string, page?: number, count?: number, search?: string, order?: Order, countries?: string, mapsType?: string, ppType?: string, friends?: boolean, ppRange?: string, scoreRange?: string, platform?: string, role?: string, hmd?: string, clans?: string, activityPeriod?: number, banned?: boolean, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<PlayerResponseWithStatsResponseWithMetadata> {
+        playersGet(sortBy?: string, page?: number, count?: number, search?: string, order?: Order, countries?: string, mapsType?: string, ppType?: string, friends?: boolean, ppRange?: string, scoreRange?: string, platform?: string, role?: string, hmd?: string, clans?: string, activityPeriod?: number, banned?: boolean, options?: any): (fetch?: NodeFetch, basePath?: string) => Promise<PlayerResponseWithStatsResponseWithMetadata> {
             const localVarFetchArgs = PlayerApiFetchParamCreator(configuration).playersGet(sortBy, page, count, search, order, countries, mapsType, ppType, friends, ppRange, scoreRange, platform, role, hmd, clans, activityPeriod, banned, options);
-            return (fetch: FetchAPI = isomorphicFetch, basePath: string = BASE_PATH) => {
+            return (fetch: NodeFetch = nodeFetch.default, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
                         return response.json();
@@ -14735,7 +14735,7 @@ export const PlayerApiFp = function(configuration?: Configuration) {
  * PlayerApi - factory interface
  * @export
  */
-export const PlayerApiFactory = function (configuration?: Configuration, fetch?: FetchAPI, basePath?: string) {
+export const PlayerApiFactory = function (configuration?: Configuration, fetch?: NodeFetch, basePath?: string) {
     return {
         /**
          * 
@@ -15086,7 +15086,7 @@ export class PlayerApi extends BaseAPI {
  * PlayerRefreshApi - fetch parameter creator
  * @export
  */
-export const PlayerRefreshApiFetchParamCreator = function (configuration?: Configuration) {
+export const PlayerRefreshApiFetchParamCreator = function (_configuration?: Configuration) {
     return {
         /**
          * 
@@ -15253,9 +15253,9 @@ export const PlayerRefreshApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        playerIdRefreshGet(id: string, refreshRank?: boolean, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<Response> {
+        playerIdRefreshGet(id: string, refreshRank?: boolean, options?: any): (fetch?: NodeFetch, basePath?: string) => Promise<nodeFetch.Response> {
             const localVarFetchArgs = PlayerRefreshApiFetchParamCreator(configuration).playerIdRefreshGet(id, refreshRank, options);
-            return (fetch: FetchAPI = isomorphicFetch, basePath: string = BASE_PATH) => {
+            return (fetch: NodeFetch = nodeFetch.default, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
                         return response;
@@ -15271,9 +15271,9 @@ export const PlayerRefreshApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        playersLeaderboardIdRefreshGet(id: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<Response> {
+        playersLeaderboardIdRefreshGet(id: string, options?: any): (fetch?: NodeFetch, basePath?: string) => Promise<nodeFetch.Response> {
             const localVarFetchArgs = PlayerRefreshApiFetchParamCreator(configuration).playersLeaderboardIdRefreshGet(id, options);
-            return (fetch: FetchAPI = isomorphicFetch, basePath: string = BASE_PATH) => {
+            return (fetch: NodeFetch = nodeFetch.default, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
                         return response;
@@ -15288,9 +15288,9 @@ export const PlayerRefreshApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        playersRankrefreshGet(options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<Response> {
+        playersRankrefreshGet(options?: any): (fetch?: NodeFetch, basePath?: string) => Promise<nodeFetch.Response> {
             const localVarFetchArgs = PlayerRefreshApiFetchParamCreator(configuration).playersRankrefreshGet(options);
-            return (fetch: FetchAPI = isomorphicFetch, basePath: string = BASE_PATH) => {
+            return (fetch: NodeFetch = nodeFetch.default, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
                         return response;
@@ -15305,9 +15305,9 @@ export const PlayerRefreshApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        playersRefreshGet(options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<Response> {
+        playersRefreshGet(options?: any): (fetch?: NodeFetch, basePath?: string) => Promise<nodeFetch.Response> {
             const localVarFetchArgs = PlayerRefreshApiFetchParamCreator(configuration).playersRefreshGet(options);
-            return (fetch: FetchAPI = isomorphicFetch, basePath: string = BASE_PATH) => {
+            return (fetch: NodeFetch = nodeFetch.default, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
                         return response;
@@ -15322,9 +15322,9 @@ export const PlayerRefreshApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        playersStatsRefreshGet(options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<Response> {
+        playersStatsRefreshGet(options?: any): (fetch?: NodeFetch, basePath?: string) => Promise<nodeFetch.Response> {
             const localVarFetchArgs = PlayerRefreshApiFetchParamCreator(configuration).playersStatsRefreshGet(options);
-            return (fetch: FetchAPI = isomorphicFetch, basePath: string = BASE_PATH) => {
+            return (fetch: NodeFetch = nodeFetch.default, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
                         return response;
@@ -15339,9 +15339,9 @@ export const PlayerRefreshApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        playersSteamRefreshGet(options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<Response> {
+        playersSteamRefreshGet(options?: any): (fetch?: NodeFetch, basePath?: string) => Promise<nodeFetch.Response> {
             const localVarFetchArgs = PlayerRefreshApiFetchParamCreator(configuration).playersSteamRefreshGet(options);
-            return (fetch: FetchAPI = isomorphicFetch, basePath: string = BASE_PATH) => {
+            return (fetch: NodeFetch = nodeFetch.default, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
                         return response;
@@ -15358,7 +15358,7 @@ export const PlayerRefreshApiFp = function(configuration?: Configuration) {
  * PlayerRefreshApi - factory interface
  * @export
  */
-export const PlayerRefreshApiFactory = function (configuration?: Configuration, fetch?: FetchAPI, basePath?: string) {
+export const PlayerRefreshApiFactory = function (configuration?: Configuration, fetch?: NodeFetch, basePath?: string) {
     return {
         /**
          * 
@@ -15489,7 +15489,7 @@ export class PlayerRefreshApi extends BaseAPI {
  * PlayerScoresApi - fetch parameter creator
  * @export
  */
-export const PlayerScoresApiFetchParamCreator = function (configuration?: Configuration) {
+export const PlayerScoresApiFetchParamCreator = function (_configuration?: Configuration) {
     return {
         /**
          * 
@@ -15999,9 +15999,9 @@ export const PlayerScoresApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        playerIdAccgraphGet(id: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<Array<GraphResponse>> {
+        playerIdAccgraphGet(id: string, options?: any): (fetch?: NodeFetch, basePath?: string) => Promise<Array<GraphResponse>> {
             const localVarFetchArgs = PlayerScoresApiFetchParamCreator(configuration).playerIdAccgraphGet(id, options);
-            return (fetch: FetchAPI = isomorphicFetch, basePath: string = BASE_PATH) => {
+            return (fetch: NodeFetch = nodeFetch.default, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
                         return response.json();
@@ -16033,9 +16033,9 @@ export const PlayerScoresApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        playerIdHistogramGet(id: string, sortBy?: string, order?: Order, count?: number, search?: string, diff?: string, mode?: string, requirements?: Requirements, scoreStatus?: ScoreFilterStatus, type?: string, modifiers?: string, starsFrom?: number, starsTo?: number, timeFrom?: number, timeTo?: number, eventId?: number, batch?: number, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<string> {
+        playerIdHistogramGet(id: string, sortBy?: string, order?: Order, count?: number, search?: string, diff?: string, mode?: string, requirements?: Requirements, scoreStatus?: ScoreFilterStatus, type?: string, modifiers?: string, starsFrom?: number, starsTo?: number, timeFrom?: number, timeTo?: number, eventId?: number, batch?: number, options?: any): (fetch?: NodeFetch, basePath?: string) => Promise<string> {
             const localVarFetchArgs = PlayerScoresApiFetchParamCreator(configuration).playerIdHistogramGet(id, sortBy, order, count, search, diff, mode, requirements, scoreStatus, type, modifiers, starsFrom, starsTo, timeFrom, timeTo, eventId, batch, options);
-            return (fetch: FetchAPI = isomorphicFetch, basePath: string = BASE_PATH) => {
+            return (fetch: NodeFetch = nodeFetch.default, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
                         return response.json();
@@ -16052,9 +16052,9 @@ export const PlayerScoresApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        playerIdHistoryGet(id: string, count?: number, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<Array<PlayerScoreStatsHistory>> {
+        playerIdHistoryGet(id: string, count?: number, options?: any): (fetch?: NodeFetch, basePath?: string) => Promise<Array<PlayerScoreStatsHistory>> {
             const localVarFetchArgs = PlayerScoresApiFetchParamCreator(configuration).playerIdHistoryGet(id, count, options);
-            return (fetch: FetchAPI = isomorphicFetch, basePath: string = BASE_PATH) => {
+            return (fetch: NodeFetch = nodeFetch.default, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
                         return response.json();
@@ -16070,9 +16070,9 @@ export const PlayerScoresApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        playerIdPinnedScoresGet(id: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<Array<ScoreResponseWithMyScore>> {
+        playerIdPinnedScoresGet(id: string, options?: any): (fetch?: NodeFetch, basePath?: string) => Promise<Array<ScoreResponseWithMyScore>> {
             const localVarFetchArgs = PlayerScoresApiFetchParamCreator(configuration).playerIdPinnedScoresGet(id, options);
-            return (fetch: FetchAPI = isomorphicFetch, basePath: string = BASE_PATH) => {
+            return (fetch: NodeFetch = nodeFetch.default, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
                         return response.json();
@@ -16089,9 +16089,9 @@ export const PlayerScoresApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        playerIdScoreLeaderboardIDDelete(id: string, leaderboardID: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<Response> {
+        playerIdScoreLeaderboardIDDelete(id: string, leaderboardID: string, options?: any): (fetch?: NodeFetch, basePath?: string) => Promise<nodeFetch.Response> {
             const localVarFetchArgs = PlayerScoresApiFetchParamCreator(configuration).playerIdScoreLeaderboardIDDelete(id, leaderboardID, options);
-            return (fetch: FetchAPI = isomorphicFetch, basePath: string = BASE_PATH) => {
+            return (fetch: NodeFetch = nodeFetch.default, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
                         return response;
@@ -16123,9 +16123,9 @@ export const PlayerScoresApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        playerIdScoresCompactGet(id: string, sortBy?: string, order?: Order, page?: number, count?: number, search?: string, diff?: string, mode?: string, requirements?: Requirements, scoreStatus?: ScoreFilterStatus, type?: string, modifiers?: string, starsFrom?: number, starsTo?: number, timeFrom?: number, timeTo?: number, eventId?: number, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<CompactScoreResponseResponseWithMetadata> {
+        playerIdScoresCompactGet(id: string, sortBy?: string, order?: Order, page?: number, count?: number, search?: string, diff?: string, mode?: string, requirements?: Requirements, scoreStatus?: ScoreFilterStatus, type?: string, modifiers?: string, starsFrom?: number, starsTo?: number, timeFrom?: number, timeTo?: number, eventId?: number, options?: any): (fetch?: NodeFetch, basePath?: string) => Promise<CompactScoreResponseResponseWithMetadata> {
             const localVarFetchArgs = PlayerScoresApiFetchParamCreator(configuration).playerIdScoresCompactGet(id, sortBy, order, page, count, search, diff, mode, requirements, scoreStatus, type, modifiers, starsFrom, starsTo, timeFrom, timeTo, eventId, options);
-            return (fetch: FetchAPI = isomorphicFetch, basePath: string = BASE_PATH) => {
+            return (fetch: NodeFetch = nodeFetch.default, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
                         return response.json();
@@ -16157,9 +16157,9 @@ export const PlayerScoresApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        playerIdScoresGet(id: string, sortBy?: string, order?: Order, page?: number, count?: number, search?: string, diff?: string, mode?: string, requirements?: Requirements, scoreStatus?: ScoreFilterStatus, type?: string, modifiers?: string, starsFrom?: number, starsTo?: number, timeFrom?: number, timeTo?: number, eventId?: number, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<ScoreResponseWithMyScoreResponseWithMetadata> {
+        playerIdScoresGet(id: string, sortBy?: string, order?: Order, page?: number, count?: number, search?: string, diff?: string, mode?: string, requirements?: Requirements, scoreStatus?: ScoreFilterStatus, type?: string, modifiers?: string, starsFrom?: number, starsTo?: number, timeFrom?: number, timeTo?: number, eventId?: number, options?: any): (fetch?: NodeFetch, basePath?: string) => Promise<ScoreResponseWithMyScoreResponseWithMetadata> {
             const localVarFetchArgs = PlayerScoresApiFetchParamCreator(configuration).playerIdScoresGet(id, sortBy, order, page, count, search, diff, mode, requirements, scoreStatus, type, modifiers, starsFrom, starsTo, timeFrom, timeTo, eventId, options);
-            return (fetch: FetchAPI = isomorphicFetch, basePath: string = BASE_PATH) => {
+            return (fetch: NodeFetch = nodeFetch.default, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
                         return response.json();
@@ -16178,9 +16178,9 @@ export const PlayerScoresApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        playerIdScorevalueHashDifficultyModeGet(id: string, hash: string, difficulty: string, mode: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<number> {
+        playerIdScorevalueHashDifficultyModeGet(id: string, hash: string, difficulty: string, mode: string, options?: any): (fetch?: NodeFetch, basePath?: string) => Promise<number> {
             const localVarFetchArgs = PlayerScoresApiFetchParamCreator(configuration).playerIdScorevalueHashDifficultyModeGet(id, hash, difficulty, mode, options);
-            return (fetch: FetchAPI = isomorphicFetch, basePath: string = BASE_PATH) => {
+            return (fetch: NodeFetch = nodeFetch.default, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
                         return response.json();
@@ -16197,7 +16197,7 @@ export const PlayerScoresApiFp = function(configuration?: Configuration) {
  * PlayerScoresApi - factory interface
  * @export
  */
-export const PlayerScoresApiFactory = function (configuration?: Configuration, fetch?: FetchAPI, basePath?: string) {
+export const PlayerScoresApiFactory = function (configuration?: Configuration, fetch?: NodeFetch, basePath?: string) {
     return {
         /**
          * 
@@ -16480,7 +16480,7 @@ export class PlayerScoresApi extends BaseAPI {
  * PlaylistApi - fetch parameter creator
  * @export
  */
-export const PlaylistApiFetchParamCreator = function (configuration?: Configuration) {
+export const PlaylistApiFetchParamCreator = function (_configuration?: Configuration) {
     return {
         /**
          * 
@@ -17163,9 +17163,9 @@ export const PlaylistApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        eventIdGet(id: number, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<EventRanking> {
+        eventIdGet(id: number, options?: any): (fetch?: NodeFetch, basePath?: string) => Promise<EventRanking> {
             const localVarFetchArgs = PlaylistApiFetchParamCreator(configuration).eventIdGet(id, options);
-            return (fetch: FetchAPI = isomorphicFetch, basePath: string = BASE_PATH) => {
+            return (fetch: NodeFetch = nodeFetch.default, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
                         return response.json();
@@ -17181,9 +17181,9 @@ export const PlaylistApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        eventIdRefreshGet(id: number, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<Response> {
+        eventIdRefreshGet(id: number, options?: any): (fetch?: NodeFetch, basePath?: string) => Promise<nodeFetch.Response> {
             const localVarFetchArgs = PlaylistApiFetchParamCreator(configuration).eventIdRefreshGet(id, options);
-            return (fetch: FetchAPI = isomorphicFetch, basePath: string = BASE_PATH) => {
+            return (fetch: NodeFetch = nodeFetch.default, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
                         return response;
@@ -17201,9 +17201,9 @@ export const PlaylistApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        eventStartIdPost(id: number, name?: string, endDate?: number, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<Response> {
+        eventStartIdPost(id: number, name?: string, endDate?: number, options?: any): (fetch?: NodeFetch, basePath?: string) => Promise<nodeFetch.Response> {
             const localVarFetchArgs = PlaylistApiFetchParamCreator(configuration).eventStartIdPost(id, name, endDate, options);
-            return (fetch: FetchAPI = isomorphicFetch, basePath: string = BASE_PATH) => {
+            return (fetch: NodeFetch = nodeFetch.default, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
                         return response;
@@ -17223,9 +17223,9 @@ export const PlaylistApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        eventsGet(page?: number, count?: number, sortBy?: string, search?: string, order?: Order, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<EventResponseResponseWithMetadata> {
+        eventsGet(page?: number, count?: number, sortBy?: string, search?: string, order?: Order, options?: any): (fetch?: NodeFetch, basePath?: string) => Promise<EventResponseResponseWithMetadata> {
             const localVarFetchArgs = PlaylistApiFetchParamCreator(configuration).eventsGet(page, count, sortBy, search, order, options);
-            return (fetch: FetchAPI = isomorphicFetch, basePath: string = BASE_PATH) => {
+            return (fetch: NodeFetch = nodeFetch.default, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
                         return response.json();
@@ -17263,9 +17263,9 @@ export const PlaylistApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        playlistGenerateGet(count?: number, sortBy?: SortBy, order?: Order, search?: string, type?: Type, mode?: string, mapType?: number, allTypes?: Operation, mapRequirements?: Requirements, allRequirements?: Operation, mytype?: MyType, starsFrom?: number, starsTo?: number, accratingFrom?: number, accratingTo?: number, passratingFrom?: number, passratingTo?: number, techratingFrom?: number, techratingTo?: number, dateFrom?: number, dateTo?: number, duplicateDiffs?: boolean, title?: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<string> {
+        playlistGenerateGet(count?: number, sortBy?: SortBy, order?: Order, search?: string, type?: Type, mode?: string, mapType?: number, allTypes?: Operation, mapRequirements?: Requirements, allRequirements?: Operation, mytype?: MyType, starsFrom?: number, starsTo?: number, accratingFrom?: number, accratingTo?: number, passratingFrom?: number, passratingTo?: number, techratingFrom?: number, techratingTo?: number, dateFrom?: number, dateTo?: number, duplicateDiffs?: boolean, title?: string, options?: any): (fetch?: NodeFetch, basePath?: string) => Promise<string> {
             const localVarFetchArgs = PlaylistApiFetchParamCreator(configuration).playlistGenerateGet(count, sortBy, order, search, type, mode, mapType, allTypes, mapRequirements, allRequirements, mytype, starsFrom, starsTo, accratingFrom, accratingTo, passratingFrom, passratingTo, techratingFrom, techratingTo, dateFrom, dateTo, duplicateDiffs, title, options);
-            return (fetch: FetchAPI = isomorphicFetch, basePath: string = BASE_PATH) => {
+            return (fetch: NodeFetch = nodeFetch.default, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
                         return response.json();
@@ -17281,9 +17281,9 @@ export const PlaylistApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        playlistIdGet(id: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<Response> {
+        playlistIdGet(id: string, options?: any): (fetch?: NodeFetch, basePath?: string) => Promise<nodeFetch.Response> {
             const localVarFetchArgs = PlaylistApiFetchParamCreator(configuration).playlistIdGet(id, options);
-            return (fetch: FetchAPI = isomorphicFetch, basePath: string = BASE_PATH) => {
+            return (fetch: NodeFetch = nodeFetch.default, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
                         return response;
@@ -17299,9 +17299,9 @@ export const PlaylistApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        playlistImageIdGet(id: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<Response> {
+        playlistImageIdGet(id: string, options?: any): (fetch?: NodeFetch, basePath?: string) => Promise<nodeFetch.Response> {
             const localVarFetchArgs = PlaylistApiFetchParamCreator(configuration).playlistImageIdGet(id, options);
-            return (fetch: FetchAPI = isomorphicFetch, basePath: string = BASE_PATH) => {
+            return (fetch: NodeFetch = nodeFetch.default, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
                         return response;
@@ -17316,9 +17316,9 @@ export const PlaylistApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        playlistRefreshnominatedGet(options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<Response> {
+        playlistRefreshnominatedGet(options?: any): (fetch?: NodeFetch, basePath?: string) => Promise<nodeFetch.Response> {
             const localVarFetchArgs = PlaylistApiFetchParamCreator(configuration).playlistRefreshnominatedGet(options);
-            return (fetch: FetchAPI = isomorphicFetch, basePath: string = BASE_PATH) => {
+            return (fetch: NodeFetch = nodeFetch.default, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
                         return response;
@@ -17333,9 +17333,9 @@ export const PlaylistApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        playlistRefreshqualifiedGet(options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<Response> {
+        playlistRefreshqualifiedGet(options?: any): (fetch?: NodeFetch, basePath?: string) => Promise<nodeFetch.Response> {
             const localVarFetchArgs = PlaylistApiFetchParamCreator(configuration).playlistRefreshqualifiedGet(options);
-            return (fetch: FetchAPI = isomorphicFetch, basePath: string = BASE_PATH) => {
+            return (fetch: NodeFetch = nodeFetch.default, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
                         return response;
@@ -17350,9 +17350,9 @@ export const PlaylistApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        playlistRefreshrankedGet(options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<Response> {
+        playlistRefreshrankedGet(options?: any): (fetch?: NodeFetch, basePath?: string) => Promise<nodeFetch.Response> {
             const localVarFetchArgs = PlaylistApiFetchParamCreator(configuration).playlistRefreshrankedGet(options);
-            return (fetch: FetchAPI = isomorphicFetch, basePath: string = BASE_PATH) => {
+            return (fetch: NodeFetch = nodeFetch.default, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
                         return response;
@@ -17383,9 +17383,9 @@ export const PlaylistApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        playlistScoresGenerateGet(count?: number, playerId?: string, sortBy?: string, order?: Order, search?: string, diff?: string, type?: string, mode?: string, requirements?: Requirements, modifiers?: string, starsFrom?: number, starsTo?: number, timeFrom?: number, timeTo?: number, eventId?: number, duplicateDiffs?: boolean, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<string> {
+        playlistScoresGenerateGet(count?: number, playerId?: string, sortBy?: string, order?: Order, search?: string, diff?: string, type?: string, mode?: string, requirements?: Requirements, modifiers?: string, starsFrom?: number, starsTo?: number, timeFrom?: number, timeTo?: number, eventId?: number, duplicateDiffs?: boolean, options?: any): (fetch?: NodeFetch, basePath?: string) => Promise<string> {
             const localVarFetchArgs = PlaylistApiFetchParamCreator(configuration).playlistScoresGenerateGet(count, playerId, sortBy, order, search, diff, type, mode, requirements, modifiers, starsFrom, starsTo, timeFrom, timeTo, eventId, duplicateDiffs, options);
-            return (fetch: FetchAPI = isomorphicFetch, basePath: string = BASE_PATH) => {
+            return (fetch: NodeFetch = nodeFetch.default, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
                         return response.json();
@@ -17400,9 +17400,9 @@ export const PlaylistApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        playlistsGet(options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<Array<Playlist>> {
+        playlistsGet(options?: any): (fetch?: NodeFetch, basePath?: string) => Promise<Array<Playlist>> {
             const localVarFetchArgs = PlaylistApiFetchParamCreator(configuration).playlistsGet(options);
-            return (fetch: FetchAPI = isomorphicFetch, basePath: string = BASE_PATH) => {
+            return (fetch: NodeFetch = nodeFetch.default, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
                         return response.json();
@@ -17417,9 +17417,9 @@ export const PlaylistApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        userOneclickdoneGet(options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<Response> {
+        userOneclickdoneGet(options?: any): (fetch?: NodeFetch, basePath?: string) => Promise<nodeFetch.Response> {
             const localVarFetchArgs = PlaylistApiFetchParamCreator(configuration).userOneclickdoneGet(options);
-            return (fetch: FetchAPI = isomorphicFetch, basePath: string = BASE_PATH) => {
+            return (fetch: NodeFetch = nodeFetch.default, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
                         return response;
@@ -17434,9 +17434,9 @@ export const PlaylistApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        userOneclickplaylistGet(options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<Response> {
+        userOneclickplaylistGet(options?: any): (fetch?: NodeFetch, basePath?: string) => Promise<nodeFetch.Response> {
             const localVarFetchArgs = PlaylistApiFetchParamCreator(configuration).userOneclickplaylistGet(options);
-            return (fetch: FetchAPI = isomorphicFetch, basePath: string = BASE_PATH) => {
+            return (fetch: NodeFetch = nodeFetch.default, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
                         return response;
@@ -17451,9 +17451,9 @@ export const PlaylistApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        userOneclickplaylistPost(options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<Response> {
+        userOneclickplaylistPost(options?: any): (fetch?: NodeFetch, basePath?: string) => Promise<nodeFetch.Response> {
             const localVarFetchArgs = PlaylistApiFetchParamCreator(configuration).userOneclickplaylistPost(options);
-            return (fetch: FetchAPI = isomorphicFetch, basePath: string = BASE_PATH) => {
+            return (fetch: NodeFetch = nodeFetch.default, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
                         return response;
@@ -17469,9 +17469,9 @@ export const PlaylistApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        userPlaylistDelete(id?: number, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<number> {
+        userPlaylistDelete(id?: number, options?: any): (fetch?: NodeFetch, basePath?: string) => Promise<number> {
             const localVarFetchArgs = PlaylistApiFetchParamCreator(configuration).userPlaylistDelete(id, options);
-            return (fetch: FetchAPI = isomorphicFetch, basePath: string = BASE_PATH) => {
+            return (fetch: NodeFetch = nodeFetch.default, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
                         return response.json();
@@ -17487,9 +17487,9 @@ export const PlaylistApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        userPlaylistPost(id?: number, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<number> {
+        userPlaylistPost(id?: number, options?: any): (fetch?: NodeFetch, basePath?: string) => Promise<number> {
             const localVarFetchArgs = PlaylistApiFetchParamCreator(configuration).userPlaylistPost(id, options);
-            return (fetch: FetchAPI = isomorphicFetch, basePath: string = BASE_PATH) => {
+            return (fetch: NodeFetch = nodeFetch.default, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
                         return response.json();
@@ -17504,9 +17504,9 @@ export const PlaylistApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        userPlaylistsGet(options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<Array<Playlist>> {
+        userPlaylistsGet(options?: any): (fetch?: NodeFetch, basePath?: string) => Promise<Array<Playlist>> {
             const localVarFetchArgs = PlaylistApiFetchParamCreator(configuration).userPlaylistsGet(options);
-            return (fetch: FetchAPI = isomorphicFetch, basePath: string = BASE_PATH) => {
+            return (fetch: NodeFetch = nodeFetch.default, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
                         return response.json();
@@ -17523,7 +17523,7 @@ export const PlaylistApiFp = function(configuration?: Configuration) {
  * PlaylistApi - factory interface
  * @export
  */
-export const PlaylistApiFactory = function (configuration?: Configuration, fetch?: FetchAPI, basePath?: string) {
+export const PlaylistApiFactory = function (configuration?: Configuration, fetch?: NodeFetch, basePath?: string) {
     return {
         /**
          * 
@@ -17970,7 +17970,7 @@ export class PlaylistApi extends BaseAPI {
  * PreviewApi - fetch parameter creator
  * @export
  */
-export const PreviewApiFetchParamCreator = function (configuration?: Configuration) {
+export const PreviewApiFetchParamCreator = function (_configuration?: Configuration) {
     return {
         /**
          * 
@@ -18086,9 +18086,9 @@ export const PreviewApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        previewReplayGet(playerID?: string, id?: string, difficulty?: string, mode?: string, link?: string, scoreId?: number, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<Response> {
+        previewReplayGet(playerID?: string, id?: string, difficulty?: string, mode?: string, link?: string, scoreId?: number, options?: any): (fetch?: NodeFetch, basePath?: string) => Promise<nodeFetch.Response> {
             const localVarFetchArgs = PreviewApiFetchParamCreator(configuration).previewReplayGet(playerID, id, difficulty, mode, link, scoreId, options);
-            return (fetch: FetchAPI = isomorphicFetch, basePath: string = BASE_PATH) => {
+            return (fetch: NodeFetch = nodeFetch.default, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
                         return response;
@@ -18107,9 +18107,9 @@ export const PreviewApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        previewRoyaleGet(players?: string, hash?: string, difficulty?: string, mode?: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<Response> {
+        previewRoyaleGet(players?: string, hash?: string, difficulty?: string, mode?: string, options?: any): (fetch?: NodeFetch, basePath?: string) => Promise<nodeFetch.Response> {
             const localVarFetchArgs = PreviewApiFetchParamCreator(configuration).previewRoyaleGet(players, hash, difficulty, mode, options);
-            return (fetch: FetchAPI = isomorphicFetch, basePath: string = BASE_PATH) => {
+            return (fetch: NodeFetch = nodeFetch.default, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
                         return response;
@@ -18126,7 +18126,7 @@ export const PreviewApiFp = function(configuration?: Configuration) {
  * PreviewApi - factory interface
  * @export
  */
-export const PreviewApiFactory = function (configuration?: Configuration, fetch?: FetchAPI, basePath?: string) {
+export const PreviewApiFactory = function (configuration?: Configuration, fetch?: NodeFetch, basePath?: string) {
     return {
         /**
          * 
@@ -18199,7 +18199,7 @@ export class PreviewApi extends BaseAPI {
  * RankApi - fetch parameter creator
  * @export
  */
-export const RankApiFetchParamCreator = function (configuration?: Configuration) {
+export const RankApiFetchParamCreator = function (_configuration?: Configuration) {
     return {
         /**
          * 
@@ -19077,9 +19077,9 @@ export const RankApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        grantRTJuniorPlayerIdGet(playerId: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<Response> {
+        grantRTJuniorPlayerIdGet(playerId: string, options?: any): (fetch?: NodeFetch, basePath?: string) => Promise<nodeFetch.Response> {
             const localVarFetchArgs = RankApiFetchParamCreator(configuration).grantRTJuniorPlayerIdGet(playerId, options);
-            return (fetch: FetchAPI = isomorphicFetch, basePath: string = BASE_PATH) => {
+            return (fetch: NodeFetch = nodeFetch.default, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
                         return response;
@@ -19097,9 +19097,9 @@ export const RankApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        nominateHashDiffModePost(hash: string, diff: string, mode: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<Response> {
+        nominateHashDiffModePost(hash: string, diff: string, mode: string, options?: any): (fetch?: NodeFetch, basePath?: string) => Promise<nodeFetch.Response> {
             const localVarFetchArgs = RankApiFetchParamCreator(configuration).nominateHashDiffModePost(hash, diff, mode, options);
-            return (fetch: FetchAPI = isomorphicFetch, basePath: string = BASE_PATH) => {
+            return (fetch: NodeFetch = nodeFetch.default, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
                         return response;
@@ -19115,9 +19115,9 @@ export const RankApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        prevQualTimeHashGet(hash: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<PrevQualification> {
+        prevQualTimeHashGet(hash: string, options?: any): (fetch?: NodeFetch, basePath?: string) => Promise<PrevQualification> {
             const localVarFetchArgs = RankApiFetchParamCreator(configuration).prevQualTimeHashGet(hash, options);
-            return (fetch: FetchAPI = isomorphicFetch, basePath: string = BASE_PATH) => {
+            return (fetch: NodeFetch = nodeFetch.default, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
                         return response.json();
@@ -19133,9 +19133,9 @@ export const RankApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        qualificationCommentIdDelete(id: number, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<Response> {
+        qualificationCommentIdDelete(id: number, options?: any): (fetch?: NodeFetch, basePath?: string) => Promise<nodeFetch.Response> {
             const localVarFetchArgs = RankApiFetchParamCreator(configuration).qualificationCommentIdDelete(id, options);
-            return (fetch: FetchAPI = isomorphicFetch, basePath: string = BASE_PATH) => {
+            return (fetch: NodeFetch = nodeFetch.default, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
                         return response;
@@ -19151,9 +19151,9 @@ export const RankApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        qualificationCommentIdPost(id: number, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<QualificationCommentary> {
+        qualificationCommentIdPost(id: number, options?: any): (fetch?: NodeFetch, basePath?: string) => Promise<QualificationCommentary> {
             const localVarFetchArgs = RankApiFetchParamCreator(configuration).qualificationCommentIdPost(id, options);
-            return (fetch: FetchAPI = isomorphicFetch, basePath: string = BASE_PATH) => {
+            return (fetch: NodeFetch = nodeFetch.default, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
                         return response.json();
@@ -19169,9 +19169,9 @@ export const RankApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        qualificationCommentIdPut(id: number, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<QualificationCommentary> {
+        qualificationCommentIdPut(id: number, options?: any): (fetch?: NodeFetch, basePath?: string) => Promise<QualificationCommentary> {
             const localVarFetchArgs = RankApiFetchParamCreator(configuration).qualificationCommentIdPut(id, options);
-            return (fetch: FetchAPI = isomorphicFetch, basePath: string = BASE_PATH) => {
+            return (fetch: NodeFetch = nodeFetch.default, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
                         return response.json();
@@ -19187,9 +19187,9 @@ export const RankApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        qualificationCriteriaIdDelete(id: number, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<Response> {
+        qualificationCriteriaIdDelete(id: number, options?: any): (fetch?: NodeFetch, basePath?: string) => Promise<nodeFetch.Response> {
             const localVarFetchArgs = RankApiFetchParamCreator(configuration).qualificationCriteriaIdDelete(id, options);
-            return (fetch: FetchAPI = isomorphicFetch, basePath: string = BASE_PATH) => {
+            return (fetch: NodeFetch = nodeFetch.default, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
                         return response;
@@ -19205,9 +19205,9 @@ export const RankApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        qualificationCriteriaIdPost(id: number, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<CriteriaCommentary> {
+        qualificationCriteriaIdPost(id: number, options?: any): (fetch?: NodeFetch, basePath?: string) => Promise<CriteriaCommentary> {
             const localVarFetchArgs = RankApiFetchParamCreator(configuration).qualificationCriteriaIdPost(id, options);
-            return (fetch: FetchAPI = isomorphicFetch, basePath: string = BASE_PATH) => {
+            return (fetch: NodeFetch = nodeFetch.default, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
                         return response.json();
@@ -19223,9 +19223,9 @@ export const RankApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        qualificationCriteriaIdPut(id: number, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<CriteriaCommentary> {
+        qualificationCriteriaIdPut(id: number, options?: any): (fetch?: NodeFetch, basePath?: string) => Promise<CriteriaCommentary> {
             const localVarFetchArgs = RankApiFetchParamCreator(configuration).qualificationCriteriaIdPut(id, options);
-            return (fetch: FetchAPI = isomorphicFetch, basePath: string = BASE_PATH) => {
+            return (fetch: NodeFetch = nodeFetch.default, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
                         return response.json();
@@ -19251,9 +19251,9 @@ export const RankApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        qualificationHashDiffModePost(hash: string, diff: string, mode: string, newStatus?: DifficultyStatus, accRating?: number, passRating?: number, techRating?: number, type?: number, criteriaCheck?: number, criteriaCommentary?: string, modifiers?: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<Response> {
+        qualificationHashDiffModePost(hash: string, diff: string, mode: string, newStatus?: DifficultyStatus, accRating?: number, passRating?: number, techRating?: number, type?: number, criteriaCheck?: number, criteriaCommentary?: string, modifiers?: string, options?: any): (fetch?: NodeFetch, basePath?: string) => Promise<nodeFetch.Response> {
             const localVarFetchArgs = RankApiFetchParamCreator(configuration).qualificationHashDiffModePost(hash, diff, mode, newStatus, accRating, passRating, techRating, type, criteriaCheck, criteriaCommentary, modifiers, options);
-            return (fetch: FetchAPI = isomorphicFetch, basePath: string = BASE_PATH) => {
+            return (fetch: NodeFetch = nodeFetch.default, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
                         return response;
@@ -19270,9 +19270,9 @@ export const RankApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        qualificationVoteIdPost(id: number, vote?: MapQuality, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<Array<QualificationVote>> {
+        qualificationVoteIdPost(id: number, vote?: MapQuality, options?: any): (fetch?: NodeFetch, basePath?: string) => Promise<Array<QualificationVote>> {
             const localVarFetchArgs = RankApiFetchParamCreator(configuration).qualificationVoteIdPost(id, vote, options);
-            return (fetch: FetchAPI = isomorphicFetch, basePath: string = BASE_PATH) => {
+            return (fetch: NodeFetch = nodeFetch.default, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
                         return response.json();
@@ -19295,9 +19295,9 @@ export const RankApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        rankHashDiffModePost(hash: string, diff: string, mode: string, rankability?: number, accRating?: number, passRating?: number, techRating?: number, type?: number, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<Response> {
+        rankHashDiffModePost(hash: string, diff: string, mode: string, rankability?: number, accRating?: number, passRating?: number, techRating?: number, type?: number, options?: any): (fetch?: NodeFetch, basePath?: string) => Promise<nodeFetch.Response> {
             const localVarFetchArgs = RankApiFetchParamCreator(configuration).rankHashDiffModePost(hash, diff, mode, rankability, accRating, passRating, techRating, type, options);
-            return (fetch: FetchAPI = isomorphicFetch, basePath: string = BASE_PATH) => {
+            return (fetch: NodeFetch = nodeFetch.default, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
                         return response;
@@ -19313,9 +19313,9 @@ export const RankApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        rankabunchPost(body?: { [key: string]: number; }, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<Response> {
+        rankabunchPost(body?: { [key: string]: number; }, options?: any): (fetch?: NodeFetch, basePath?: string) => Promise<nodeFetch.Response> {
             const localVarFetchArgs = RankApiFetchParamCreator(configuration).rankabunchPost(body, options);
-            return (fetch: FetchAPI = isomorphicFetch, basePath: string = BASE_PATH) => {
+            return (fetch: NodeFetch = nodeFetch.default, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
                         return response;
@@ -19331,9 +19331,9 @@ export const RankApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        removeRTJuniorPlayerIdGet(playerId: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<Response> {
+        removeRTJuniorPlayerIdGet(playerId: string, options?: any): (fetch?: NodeFetch, basePath?: string) => Promise<nodeFetch.Response> {
             const localVarFetchArgs = RankApiFetchParamCreator(configuration).removeRTJuniorPlayerIdGet(playerId, options);
-            return (fetch: FetchAPI = isomorphicFetch, basePath: string = BASE_PATH) => {
+            return (fetch: NodeFetch = nodeFetch.default, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
                         return response;
@@ -19351,9 +19351,9 @@ export const RankApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        reweightApproveHashDiffModePost(hash: string, diff: string, mode: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<Response> {
+        reweightApproveHashDiffModePost(hash: string, diff: string, mode: string, options?: any): (fetch?: NodeFetch, basePath?: string) => Promise<nodeFetch.Response> {
             const localVarFetchArgs = RankApiFetchParamCreator(configuration).reweightApproveHashDiffModePost(hash, diff, mode, options);
-            return (fetch: FetchAPI = isomorphicFetch, basePath: string = BASE_PATH) => {
+            return (fetch: NodeFetch = nodeFetch.default, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
                         return response;
@@ -19371,9 +19371,9 @@ export const RankApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        reweightCancelHashDiffModePost(hash: string, diff: string, mode: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<Response> {
+        reweightCancelHashDiffModePost(hash: string, diff: string, mode: string, options?: any): (fetch?: NodeFetch, basePath?: string) => Promise<nodeFetch.Response> {
             const localVarFetchArgs = RankApiFetchParamCreator(configuration).reweightCancelHashDiffModePost(hash, diff, mode, options);
-            return (fetch: FetchAPI = isomorphicFetch, basePath: string = BASE_PATH) => {
+            return (fetch: NodeFetch = nodeFetch.default, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
                         return response;
@@ -19397,9 +19397,9 @@ export const RankApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        reweightHashDiffModePost(hash: string, diff: string, mode: string, keep?: boolean, stars?: number, type?: number, criteriaCheck?: number, criteriaCommentary?: string, modifiers?: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<Response> {
+        reweightHashDiffModePost(hash: string, diff: string, mode: string, keep?: boolean, stars?: number, type?: number, criteriaCheck?: number, criteriaCommentary?: string, modifiers?: string, options?: any): (fetch?: NodeFetch, basePath?: string) => Promise<nodeFetch.Response> {
             const localVarFetchArgs = RankApiFetchParamCreator(configuration).reweightHashDiffModePost(hash, diff, mode, keep, stars, type, criteriaCheck, criteriaCommentary, modifiers, options);
-            return (fetch: FetchAPI = isomorphicFetch, basePath: string = BASE_PATH) => {
+            return (fetch: NodeFetch = nodeFetch.default, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
                         return response;
@@ -19420,9 +19420,9 @@ export const RankApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        voteHashDiffModePost(hash: string, diff: string, mode: string, rankability?: number, stars?: string, type?: number, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<VoteStatus> {
+        voteHashDiffModePost(hash: string, diff: string, mode: string, rankability?: number, stars?: string, type?: number, options?: any): (fetch?: NodeFetch, basePath?: string) => Promise<VoteStatus> {
             const localVarFetchArgs = RankApiFetchParamCreator(configuration).voteHashDiffModePost(hash, diff, mode, rankability, stars, type, options);
-            return (fetch: FetchAPI = isomorphicFetch, basePath: string = BASE_PATH) => {
+            return (fetch: NodeFetch = nodeFetch.default, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
                         return response.json();
@@ -19444,9 +19444,9 @@ export const RankApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        voteSteamHashDiffModePost(hash: string, diff: string, mode: string, ticket?: string, rankability?: number, stars?: string, type?: number, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<VoteStatus> {
+        voteSteamHashDiffModePost(hash: string, diff: string, mode: string, ticket?: string, rankability?: number, stars?: string, type?: number, options?: any): (fetch?: NodeFetch, basePath?: string) => Promise<VoteStatus> {
             const localVarFetchArgs = RankApiFetchParamCreator(configuration).voteSteamHashDiffModePost(hash, diff, mode, ticket, rankability, stars, type, options);
-            return (fetch: FetchAPI = isomorphicFetch, basePath: string = BASE_PATH) => {
+            return (fetch: NodeFetch = nodeFetch.default, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
                         return response.json();
@@ -19463,9 +19463,9 @@ export const RankApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        votefeedbackPost(scoreId?: number, value?: number, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<Response> {
+        votefeedbackPost(scoreId?: number, value?: number, options?: any): (fetch?: NodeFetch, basePath?: string) => Promise<nodeFetch.Response> {
             const localVarFetchArgs = RankApiFetchParamCreator(configuration).votefeedbackPost(scoreId, value, options);
-            return (fetch: FetchAPI = isomorphicFetch, basePath: string = BASE_PATH) => {
+            return (fetch: NodeFetch = nodeFetch.default, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
                         return response;
@@ -19484,9 +19484,9 @@ export const RankApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        votestatusHashDiffModeGet(hash: string, diff: string, mode: string, player?: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<VoteStatus> {
+        votestatusHashDiffModeGet(hash: string, diff: string, mode: string, player?: string, options?: any): (fetch?: NodeFetch, basePath?: string) => Promise<VoteStatus> {
             const localVarFetchArgs = RankApiFetchParamCreator(configuration).votestatusHashDiffModeGet(hash, diff, mode, player, options);
-            return (fetch: FetchAPI = isomorphicFetch, basePath: string = BASE_PATH) => {
+            return (fetch: NodeFetch = nodeFetch.default, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
                         return response.json();
@@ -19501,9 +19501,9 @@ export const RankApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        votingSpreadGet(options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<{ [key: string]: number; }> {
+        votingSpreadGet(options?: any): (fetch?: NodeFetch, basePath?: string) => Promise<{ [key: string]: number; }> {
             const localVarFetchArgs = RankApiFetchParamCreator(configuration).votingSpreadGet(options);
-            return (fetch: FetchAPI = isomorphicFetch, basePath: string = BASE_PATH) => {
+            return (fetch: NodeFetch = nodeFetch.default, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
                         return response.json();
@@ -19520,7 +19520,7 @@ export const RankApiFp = function(configuration?: Configuration) {
  * RankApi - factory interface
  * @export
  */
-export const RankApiFactory = function (configuration?: Configuration, fetch?: FetchAPI, basePath?: string) {
+export const RankApiFactory = function (configuration?: Configuration, fetch?: NodeFetch, basePath?: string) {
     return {
         /**
          * 
@@ -20069,7 +20069,7 @@ export class RankApi extends BaseAPI {
  * ReplayApi - fetch parameter creator
  * @export
  */
-export const ReplayApiFetchParamCreator = function (configuration?: Configuration) {
+export const ReplayApiFetchParamCreator = function (_configuration?: Configuration) {
     return {
         /**
          * 
@@ -20145,9 +20145,9 @@ export const ReplayApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        replayPost(ticket?: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<ScoreResponse> {
+        replayPost(ticket?: string, options?: any): (fetch?: NodeFetch, basePath?: string) => Promise<ScoreResponse> {
             const localVarFetchArgs = ReplayApiFetchParamCreator(configuration).replayPost(ticket, options);
-            return (fetch: FetchAPI = isomorphicFetch, basePath: string = BASE_PATH) => {
+            return (fetch: NodeFetch = nodeFetch.default, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
                         return response.json();
@@ -20164,9 +20164,9 @@ export const ReplayApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        replayoculusPut(time?: number, type?: EndType, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<ScoreResponse> {
+        replayoculusPut(time?: number, type?: EndType, options?: any): (fetch?: NodeFetch, basePath?: string) => Promise<ScoreResponse> {
             const localVarFetchArgs = ReplayApiFetchParamCreator(configuration).replayoculusPut(time, type, options);
-            return (fetch: FetchAPI = isomorphicFetch, basePath: string = BASE_PATH) => {
+            return (fetch: NodeFetch = nodeFetch.default, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
                         return response.json();
@@ -20183,7 +20183,7 @@ export const ReplayApiFp = function(configuration?: Configuration) {
  * ReplayApi - factory interface
  * @export
  */
-export const ReplayApiFactory = function (configuration?: Configuration, fetch?: FetchAPI, basePath?: string) {
+export const ReplayApiFactory = function (configuration?: Configuration, fetch?: NodeFetch, basePath?: string) {
     return {
         /**
          * 
@@ -20242,7 +20242,7 @@ export class ReplayApi extends BaseAPI {
  * ScoreApi - fetch parameter creator
  * @export
  */
-export const ScoreApiFetchParamCreator = function (configuration?: Configuration) {
+export const ScoreApiFetchParamCreator = function (_configuration?: Configuration) {
     return {
         /**
          * 
@@ -20732,9 +20732,9 @@ export const ScoreApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        replaysGet(count?: number, page?: number, dateFrom?: number, dateTo?: number, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<StringResponseWithMetadata> {
+        replaysGet(count?: number, page?: number, dateFrom?: number, dateTo?: number, options?: any): (fetch?: NodeFetch, basePath?: string) => Promise<StringResponseWithMetadata> {
             const localVarFetchArgs = ScoreApiFetchParamCreator(configuration).replaysGet(count, page, dateFrom, dateTo, options);
-            return (fetch: FetchAPI = isomorphicFetch, basePath: string = BASE_PATH) => {
+            return (fetch: NodeFetch = nodeFetch.default, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
                         return response.json();
@@ -20750,9 +20750,9 @@ export const ScoreApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        scoreCalculatestatisticIdGet(id: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<ScoreStatistic> {
+        scoreCalculatestatisticIdGet(id: string, options?: any): (fetch?: NodeFetch, basePath?: string) => Promise<ScoreStatistic> {
             const localVarFetchArgs = ScoreApiFetchParamCreator(configuration).scoreCalculatestatisticIdGet(id, options);
-            return (fetch: FetchAPI = isomorphicFetch, basePath: string = BASE_PATH) => {
+            return (fetch: NodeFetch = nodeFetch.default, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
                         return response.json();
@@ -20768,9 +20768,9 @@ export const ScoreApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        scoreIdDelete(id: number, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<Response> {
+        scoreIdDelete(id: number, options?: any): (fetch?: NodeFetch, basePath?: string) => Promise<nodeFetch.Response> {
             const localVarFetchArgs = ScoreApiFetchParamCreator(configuration).scoreIdDelete(id, options);
-            return (fetch: FetchAPI = isomorphicFetch, basePath: string = BASE_PATH) => {
+            return (fetch: NodeFetch = nodeFetch.default, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
                         return response;
@@ -20787,9 +20787,9 @@ export const ScoreApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        scoreIdGet(id: number, fallbackToRedirect?: boolean, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<ScoreResponse> {
+        scoreIdGet(id: number, fallbackToRedirect?: boolean, options?: any): (fetch?: NodeFetch, basePath?: string) => Promise<ScoreResponse> {
             const localVarFetchArgs = ScoreApiFetchParamCreator(configuration).scoreIdGet(id, fallbackToRedirect, options);
-            return (fetch: FetchAPI = isomorphicFetch, basePath: string = BASE_PATH) => {
+            return (fetch: NodeFetch = nodeFetch.default, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
                         return response.json();
@@ -20809,9 +20809,9 @@ export const ScoreApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        scoreIdPinPut(id: number, pin?: boolean, description?: string, link?: string, priority?: number, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<ScoreMetadata> {
+        scoreIdPinPut(id: number, pin?: boolean, description?: string, link?: string, priority?: number, options?: any): (fetch?: NodeFetch, basePath?: string) => Promise<ScoreMetadata> {
             const localVarFetchArgs = ScoreApiFetchParamCreator(configuration).scoreIdPinPut(id, pin, description, link, priority, options);
-            return (fetch: FetchAPI = isomorphicFetch, basePath: string = BASE_PATH) => {
+            return (fetch: NodeFetch = nodeFetch.default, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
                         return response.json();
@@ -20830,9 +20830,9 @@ export const ScoreApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        scorePlayerIDHashDiffModeGet(playerID: string, hash: string, diff: string, mode: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<Score> {
+        scorePlayerIDHashDiffModeGet(playerID: string, hash: string, diff: string, mode: string, options?: any): (fetch?: NodeFetch, basePath?: string) => Promise<Score> {
             const localVarFetchArgs = ScoreApiFetchParamCreator(configuration).scorePlayerIDHashDiffModeGet(playerID, hash, diff, mode, options);
-            return (fetch: FetchAPI = isomorphicFetch, basePath: string = BASE_PATH) => {
+            return (fetch: NodeFetch = nodeFetch.default, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
                         return response.json();
@@ -20847,9 +20847,9 @@ export const ScoreApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        scoreRandomGet(options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<Score> {
+        scoreRandomGet(options?: any): (fetch?: NodeFetch, basePath?: string) => Promise<Score> {
             const localVarFetchArgs = ScoreApiFetchParamCreator(configuration).scoreRandomGet(options);
-            return (fetch: FetchAPI = isomorphicFetch, basePath: string = BASE_PATH) => {
+            return (fetch: NodeFetch = nodeFetch.default, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
                         return response.json();
@@ -20865,9 +20865,9 @@ export const ScoreApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        scoreStatisticIdGet(id: number, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<Response> {
+        scoreStatisticIdGet(id: number, options?: any): (fetch?: NodeFetch, basePath?: string) => Promise<nodeFetch.Response> {
             const localVarFetchArgs = ScoreApiFetchParamCreator(configuration).scoreStatisticIdGet(id, options);
-            return (fetch: FetchAPI = isomorphicFetch, basePath: string = BASE_PATH) => {
+            return (fetch: NodeFetch = nodeFetch.default, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
                         return response;
@@ -20882,9 +20882,9 @@ export const ScoreApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        scorestatsGet(options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<string> {
+        scorestatsGet(options?: any): (fetch?: NodeFetch, basePath?: string) => Promise<string> {
             const localVarFetchArgs = ScoreApiFetchParamCreator(configuration).scorestatsGet(options);
-            return (fetch: FetchAPI = isomorphicFetch, basePath: string = BASE_PATH) => {
+            return (fetch: NodeFetch = nodeFetch.default, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
                         return response.json();
@@ -20908,9 +20908,9 @@ export const ScoreApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        v3ScoresHashDiffModeContextScopeMethodGet(hash: string, diff: string, mode: string, context: string, scope: string, method: string, player?: string, page?: number, count?: number, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<ScoreResponseResponseWithMetadataAndSelection> {
+        v3ScoresHashDiffModeContextScopeMethodGet(hash: string, diff: string, mode: string, context: string, scope: string, method: string, player?: string, page?: number, count?: number, options?: any): (fetch?: NodeFetch, basePath?: string) => Promise<ScoreResponseResponseWithMetadataAndSelection> {
             const localVarFetchArgs = ScoreApiFetchParamCreator(configuration).v3ScoresHashDiffModeContextScopeMethodGet(hash, diff, mode, context, scope, method, player, page, count, options);
-            return (fetch: FetchAPI = isomorphicFetch, basePath: string = BASE_PATH) => {
+            return (fetch: NodeFetch = nodeFetch.default, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
                         return response.json();
@@ -20930,9 +20930,9 @@ export const ScoreApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        v4ScoresHashDiffModeGet(hash: string, diff: string, mode: string, page?: number, count?: number, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<SaverScoreResponseResponseWithMetadata> {
+        v4ScoresHashDiffModeGet(hash: string, diff: string, mode: string, page?: number, count?: number, options?: any): (fetch?: NodeFetch, basePath?: string) => Promise<SaverScoreResponseResponseWithMetadata> {
             const localVarFetchArgs = ScoreApiFetchParamCreator(configuration).v4ScoresHashDiffModeGet(hash, diff, mode, page, count, options);
-            return (fetch: FetchAPI = isomorphicFetch, basePath: string = BASE_PATH) => {
+            return (fetch: NodeFetch = nodeFetch.default, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
                         return response.json();
@@ -20952,9 +20952,9 @@ export const ScoreApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        v5ScoresHashDiffModeGet(hash: string, diff: string, mode: string, page?: number, count?: number, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<SaverScoreResponseSaverContainerResponseResponseWithMetadataAndContainer> {
+        v5ScoresHashDiffModeGet(hash: string, diff: string, mode: string, page?: number, count?: number, options?: any): (fetch?: NodeFetch, basePath?: string) => Promise<SaverScoreResponseSaverContainerResponseResponseWithMetadataAndContainer> {
             const localVarFetchArgs = ScoreApiFetchParamCreator(configuration).v5ScoresHashDiffModeGet(hash, diff, mode, page, count, options);
-            return (fetch: FetchAPI = isomorphicFetch, basePath: string = BASE_PATH) => {
+            return (fetch: NodeFetch = nodeFetch.default, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
                         return response.json();
@@ -20971,7 +20971,7 @@ export const ScoreApiFp = function(configuration?: Configuration) {
  * ScoreApi - factory interface
  * @export
  */
-export const ScoreApiFactory = function (configuration?: Configuration, fetch?: FetchAPI, basePath?: string) {
+export const ScoreApiFactory = function (configuration?: Configuration, fetch?: NodeFetch, basePath?: string) {
     return {
         /**
          * 
@@ -21278,7 +21278,7 @@ export class ScoreApi extends BaseAPI {
  * ScoreRefreshApi - fetch parameter creator
  * @export
  */
-export const ScoreRefreshApiFetchParamCreator = function (configuration?: Configuration) {
+export const ScoreRefreshApiFetchParamCreator = function (_configuration?: Configuration) {
     return {
         /**
          * 
@@ -21370,9 +21370,9 @@ export const ScoreRefreshApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        scoresBulkrankrefreshGet(options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<Response> {
+        scoresBulkrankrefreshGet(options?: any): (fetch?: NodeFetch, basePath?: string) => Promise<nodeFetch.Response> {
             const localVarFetchArgs = ScoreRefreshApiFetchParamCreator(configuration).scoresBulkrankrefreshGet(options);
-            return (fetch: FetchAPI = isomorphicFetch, basePath: string = BASE_PATH) => {
+            return (fetch: NodeFetch = nodeFetch.default, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
                         return response;
@@ -21388,9 +21388,9 @@ export const ScoreRefreshApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        scoresBulkrefreshGet(leaderboardId?: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<Response> {
+        scoresBulkrefreshGet(leaderboardId?: string, options?: any): (fetch?: NodeFetch, basePath?: string) => Promise<nodeFetch.Response> {
             const localVarFetchArgs = ScoreRefreshApiFetchParamCreator(configuration).scoresBulkrefreshGet(leaderboardId, options);
-            return (fetch: FetchAPI = isomorphicFetch, basePath: string = BASE_PATH) => {
+            return (fetch: NodeFetch = nodeFetch.default, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
                         return response;
@@ -21406,9 +21406,9 @@ export const ScoreRefreshApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        scoresRefreshGet(leaderboardId?: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<Response> {
+        scoresRefreshGet(leaderboardId?: string, options?: any): (fetch?: NodeFetch, basePath?: string) => Promise<nodeFetch.Response> {
             const localVarFetchArgs = ScoreRefreshApiFetchParamCreator(configuration).scoresRefreshGet(leaderboardId, options);
-            return (fetch: FetchAPI = isomorphicFetch, basePath: string = BASE_PATH) => {
+            return (fetch: NodeFetch = nodeFetch.default, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
                         return response;
@@ -21425,7 +21425,7 @@ export const ScoreRefreshApiFp = function(configuration?: Configuration) {
  * ScoreRefreshApi - factory interface
  * @export
  */
-export const ScoreRefreshApiFactory = function (configuration?: Configuration, fetch?: FetchAPI, basePath?: string) {
+export const ScoreRefreshApiFactory = function (configuration?: Configuration, fetch?: NodeFetch, basePath?: string) {
     return {
         /**
          * 
@@ -21500,7 +21500,7 @@ export class ScoreRefreshApi extends BaseAPI {
  * SocialsApi - fetch parameter creator
  * @export
  */
-export const SocialsApiFetchParamCreator = function (configuration?: Configuration) {
+export const SocialsApiFetchParamCreator = function (_configuration?: Configuration) {
     return {
         /**
          * 
@@ -21688,9 +21688,9 @@ export const SocialsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        userLinkBeatLeaderGet(returnUrl?: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<Response> {
+        userLinkBeatLeaderGet(returnUrl?: string, options?: any): (fetch?: NodeFetch, basePath?: string) => Promise<nodeFetch.Response> {
             const localVarFetchArgs = SocialsApiFetchParamCreator(configuration).userLinkBeatLeaderGet(returnUrl, options);
-            return (fetch: FetchAPI = isomorphicFetch, basePath: string = BASE_PATH) => {
+            return (fetch: NodeFetch = nodeFetch.default, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
                         return response;
@@ -21706,9 +21706,9 @@ export const SocialsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        userLinkDiscordGet(returnUrl?: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<Response> {
+        userLinkDiscordGet(returnUrl?: string, options?: any): (fetch?: NodeFetch, basePath?: string) => Promise<nodeFetch.Response> {
             const localVarFetchArgs = SocialsApiFetchParamCreator(configuration).userLinkDiscordGet(returnUrl, options);
-            return (fetch: FetchAPI = isomorphicFetch, basePath: string = BASE_PATH) => {
+            return (fetch: NodeFetch = nodeFetch.default, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
                         return response;
@@ -21724,9 +21724,9 @@ export const SocialsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        userLinkGoogleGet(returnUrl?: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<Response> {
+        userLinkGoogleGet(returnUrl?: string, options?: any): (fetch?: NodeFetch, basePath?: string) => Promise<nodeFetch.Response> {
             const localVarFetchArgs = SocialsApiFetchParamCreator(configuration).userLinkGoogleGet(returnUrl, options);
-            return (fetch: FetchAPI = isomorphicFetch, basePath: string = BASE_PATH) => {
+            return (fetch: NodeFetch = nodeFetch.default, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
                         return response;
@@ -21742,9 +21742,9 @@ export const SocialsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        userLinkTwitchGet(returnUrl?: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<Response> {
+        userLinkTwitchGet(returnUrl?: string, options?: any): (fetch?: NodeFetch, basePath?: string) => Promise<nodeFetch.Response> {
             const localVarFetchArgs = SocialsApiFetchParamCreator(configuration).userLinkTwitchGet(returnUrl, options);
-            return (fetch: FetchAPI = isomorphicFetch, basePath: string = BASE_PATH) => {
+            return (fetch: NodeFetch = nodeFetch.default, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
                         return response;
@@ -21760,9 +21760,9 @@ export const SocialsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        userLinkTwitterGet(returnUrl?: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<Response> {
+        userLinkTwitterGet(returnUrl?: string, options?: any): (fetch?: NodeFetch, basePath?: string) => Promise<nodeFetch.Response> {
             const localVarFetchArgs = SocialsApiFetchParamCreator(configuration).userLinkTwitterGet(returnUrl, options);
-            return (fetch: FetchAPI = isomorphicFetch, basePath: string = BASE_PATH) => {
+            return (fetch: NodeFetch = nodeFetch.default, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
                         return response;
@@ -21779,9 +21779,9 @@ export const SocialsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        userUnlinkPost(provider?: string, returnUrl?: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<Response> {
+        userUnlinkPost(provider?: string, returnUrl?: string, options?: any): (fetch?: NodeFetch, basePath?: string) => Promise<nodeFetch.Response> {
             const localVarFetchArgs = SocialsApiFetchParamCreator(configuration).userUnlinkPost(provider, returnUrl, options);
-            return (fetch: FetchAPI = isomorphicFetch, basePath: string = BASE_PATH) => {
+            return (fetch: NodeFetch = nodeFetch.default, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
                         return response;
@@ -21798,7 +21798,7 @@ export const SocialsApiFp = function(configuration?: Configuration) {
  * SocialsApi - factory interface
  * @export
  */
-export const SocialsApiFactory = function (configuration?: Configuration, fetch?: FetchAPI, basePath?: string) {
+export const SocialsApiFactory = function (configuration?: Configuration, fetch?: NodeFetch, basePath?: string) {
     return {
         /**
          * 
@@ -21937,7 +21937,7 @@ export class SocialsApi extends BaseAPI {
  * SongApi - fetch parameter creator
  * @export
  */
-export const SongApiFetchParamCreator = function (configuration?: Configuration) {
+export const SongApiFetchParamCreator = function (_configuration?: Configuration) {
     return {
         /**
          * 
@@ -22047,9 +22047,9 @@ export const SongApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        mapHashHashGet(hash: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<Song> {
+        mapHashHashGet(hash: string, options?: any): (fetch?: NodeFetch, basePath?: string) => Promise<Song> {
             const localVarFetchArgs = SongApiFetchParamCreator(configuration).mapHashHashGet(hash, options);
-            return (fetch: FetchAPI = isomorphicFetch, basePath: string = BASE_PATH) => {
+            return (fetch: NodeFetch = nodeFetch.default, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
                         return response.json();
@@ -22067,9 +22067,9 @@ export const SongApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        mapMigratenominationsGet(baseSongId?: string, oldSongId?: string, newSongId?: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<Response> {
+        mapMigratenominationsGet(baseSongId?: string, oldSongId?: string, newSongId?: string, options?: any): (fetch?: NodeFetch, basePath?: string) => Promise<nodeFetch.Response> {
             const localVarFetchArgs = SongApiFetchParamCreator(configuration).mapMigratenominationsGet(baseSongId, oldSongId, newSongId, options);
-            return (fetch: FetchAPI = isomorphicFetch, basePath: string = BASE_PATH) => {
+            return (fetch: NodeFetch = nodeFetch.default, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
                         return response;
@@ -22085,9 +22085,9 @@ export const SongApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        mapModinterfaceHashGet(hash: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<Array<DiffModResponse>> {
+        mapModinterfaceHashGet(hash: string, options?: any): (fetch?: NodeFetch, basePath?: string) => Promise<Array<DiffModResponse>> {
             const localVarFetchArgs = SongApiFetchParamCreator(configuration).mapModinterfaceHashGet(hash, options);
-            return (fetch: FetchAPI = isomorphicFetch, basePath: string = BASE_PATH) => {
+            return (fetch: NodeFetch = nodeFetch.default, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
                         return response.json();
@@ -22104,7 +22104,7 @@ export const SongApiFp = function(configuration?: Configuration) {
  * SongApi - factory interface
  * @export
  */
-export const SongApiFactory = function (configuration?: Configuration, fetch?: FetchAPI, basePath?: string) {
+export const SongApiFactory = function (configuration?: Configuration, fetch?: NodeFetch, basePath?: string) {
     return {
         /**
          * 
@@ -22185,7 +22185,7 @@ export class SongApi extends BaseAPI {
  * StatsApi - fetch parameter creator
  * @export
  */
-export const StatsApiFetchParamCreator = function (configuration?: Configuration) {
+export const StatsApiFetchParamCreator = function (_configuration?: Configuration) {
     return {
         /**
          * 
@@ -22318,9 +22318,9 @@ export const StatsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        playerIdScoresstatsGet(id: string, sortBy?: string, order?: Order, page?: number, count?: number, search?: string, diff?: string, type?: EndType, starsFrom?: number, starsTo?: number, eventId?: number, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<PlayerLeaderboardStatsResponseWithMetadata> {
+        playerIdScoresstatsGet(id: string, sortBy?: string, order?: Order, page?: number, count?: number, search?: string, diff?: string, type?: EndType, starsFrom?: number, starsTo?: number, eventId?: number, options?: any): (fetch?: NodeFetch, basePath?: string) => Promise<PlayerLeaderboardStatsResponseWithMetadata> {
             const localVarFetchArgs = StatsApiFetchParamCreator(configuration).playerIdScoresstatsGet(id, sortBy, order, page, count, search, diff, type, starsFrom, starsTo, eventId, options);
-            return (fetch: FetchAPI = isomorphicFetch, basePath: string = BASE_PATH) => {
+            return (fetch: NodeFetch = nodeFetch.default, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
                         return response.json();
@@ -22336,9 +22336,9 @@ export const StatsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        watchedScoreIdGet(scoreId: number, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<VoteStatus> {
+        watchedScoreIdGet(scoreId: number, options?: any): (fetch?: NodeFetch, basePath?: string) => Promise<VoteStatus> {
             const localVarFetchArgs = StatsApiFetchParamCreator(configuration).watchedScoreIdGet(scoreId, options);
-            return (fetch: FetchAPI = isomorphicFetch, basePath: string = BASE_PATH) => {
+            return (fetch: NodeFetch = nodeFetch.default, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
                         return response.json();
@@ -22355,7 +22355,7 @@ export const StatsApiFp = function(configuration?: Configuration) {
  * StatsApi - factory interface
  * @export
  */
-export const StatsApiFactory = function (configuration?: Configuration, fetch?: FetchAPI, basePath?: string) {
+export const StatsApiFactory = function (configuration?: Configuration, fetch?: NodeFetch, basePath?: string) {
     return {
         /**
          * 
@@ -22432,7 +22432,7 @@ export class StatsApi extends BaseAPI {
  * UnicodeApi - fetch parameter creator
  * @export
  */
-export const UnicodeApiFetchParamCreator = function (configuration?: Configuration) {
+export const UnicodeApiFetchParamCreator = function (_configuration?: Configuration) {
     return {
         /**
          * 
@@ -22477,9 +22477,9 @@ export const UnicodeApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        unicodeNameGet(name: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<Response> {
+        unicodeNameGet(name: string, options?: any): (fetch?: NodeFetch, basePath?: string) => Promise<nodeFetch.Response> {
             const localVarFetchArgs = UnicodeApiFetchParamCreator(configuration).unicodeNameGet(name, options);
-            return (fetch: FetchAPI = isomorphicFetch, basePath: string = BASE_PATH) => {
+            return (fetch: NodeFetch = nodeFetch.default, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
                         return response;
@@ -22496,7 +22496,7 @@ export const UnicodeApiFp = function(configuration?: Configuration) {
  * UnicodeApi - factory interface
  * @export
  */
-export const UnicodeApiFactory = function (configuration?: Configuration, fetch?: FetchAPI, basePath?: string) {
+export const UnicodeApiFactory = function (configuration?: Configuration, fetch?: NodeFetch, basePath?: string) {
     return {
         /**
          * 
